@@ -1,0 +1,6 @@
+[package]
+name = "rpi_slint_keyboard"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
