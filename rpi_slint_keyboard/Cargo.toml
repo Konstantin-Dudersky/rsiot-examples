@@ -1,6 +1,20 @@
 [package]
 name = "rpi_slint_keyboard"
-version = "0.1.0"
+version = "0.0.1"
 edition = "2021"
+build = "build.rs"
 
 [dependencies]
+futures = "*"
+rsiot = { path = "../../rsiot", features = ["cmp_raspberrypi", "cmp_slint"] }
+serde = { version = "*", features = ["derive"] }
+slint = { version = "*", features = [
+    "backend-linuxkms-noseat",
+    "renderer-skia",
+] }
+tokio = { version = "*", features = ["rt-multi-thread", "macros", "time"] }
+tracing = "*"
+tracing-subscriber = "*"
+
+[build-dependencies]
+slint-build = "*"
