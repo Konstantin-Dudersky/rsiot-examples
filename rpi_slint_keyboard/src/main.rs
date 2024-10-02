@@ -9,7 +9,7 @@ use rsiot::{
     executor::{ComponentExecutor, ComponentExecutorConfig},
     message::example_service::Service,
 };
-use slint::{include_modules, SharedString, Weak};
+use slint::{include_modules, platform::WindowEvent, SharedString, Weak};
 use tokio::sync::Mutex;
 use tracing::{info, Level};
 
@@ -33,83 +33,73 @@ async fn main_executor(slint_inst: Weak<MainWindow>) {
     let config_raspberrypi_gpio = config_raspberrypi_gpio::config();
 
     // cmp_slint -----------------------------------------------------------------------------------
-    let config_slint =
-        cmp_slint::Config {
-            instance: Arc::new(Mutex::new(slint_inst)),
-            fn_input: |msg, window| {
-                let Some(msg) = msg.get_custom_data() else {
-                    return;
-                };
-                match msg {
-                    Custom::GpioTab(value) => {
-                        info!("Tab");
-                        if !value {
-                            return;
-                        }
-                        let key: SharedString = slint::platform::Key::Tab.into();
-                        window
-                            .upgrade_in_event_loop(move |h| {
-                                h.window().dispatch_event(
-                                    slint::platform::WindowEvent::KeyPressed { text: key.clone() },
-                                );
-                                h.window().dispatch_event(
-                                    slint::platform::WindowEvent::KeyReleased { text: key },
-                                )
-                            })
-                            .unwrap()
+    let config_slint = cmp_slint::Config {
+        instance: Arc::new(Mutex::new(slint_inst)),
+        fn_input: |msg, window| {
+            let Some(msg) = msg.get_custom_data() else {
+                return;
+            };
+            match msg {
+                Custom::GpioTab(value) => {
+                    if !value {
+                        return;
                     }
-                    Custom::Gpio1(value) => {
-                        if !value {
-                            return;
-                        }
-                        let key: SharedString = SharedString::from("1");
-                        window
-                            .upgrade_in_event_loop(move |h| {
-                                h.window().dispatch_event(
-                                    slint::platform::WindowEvent::KeyPressed { text: key.clone() },
-                                );
-                                h.window().dispatch_event(
-                                    slint::platform::WindowEvent::KeyReleased { text: key },
-                                )
-                            })
-                            .unwrap()
-                    }
-                    Custom::Gpio2(value) => {
-                        if !value {
-                            return;
-                        }
-                        let key: SharedString = SharedString::from("2");
-                        window
-                            .upgrade_in_event_loop(move |h| {
-                                h.window().dispatch_event(
-                                    slint::platform::WindowEvent::KeyPressed { text: key.clone() },
-                                );
-                                h.window().dispatch_event(
-                                    slint::platform::WindowEvent::KeyReleased { text: key },
-                                )
-                            })
-                            .unwrap()
-                    }
-                    Custom::GpioBackspace(value) => {
-                        if !value {
-                            return;
-                        }
-                        let key: SharedString = slint::platform::Key::Backspace.into();
-                        window
-                            .upgrade_in_event_loop(move |h| {
-                                h.window().dispatch_event(
-                                    slint::platform::WindowEvent::KeyPressed { text: key.clone() },
-                                );
-                                h.window().dispatch_event(
-                                    slint::platform::WindowEvent::KeyReleased { text: key },
-                                )
-                            })
-                            .unwrap()
-                    }
+                    let key: SharedString = slint::platform::Key::Tab.into();
+                    window
+                        .upgrade_in_event_loop(move |h| {
+                            h.window()
+                                .dispatch_event(WindowEvent::KeyPressed { text: key.clone() });
+                            h.window()
+                                .dispatch_event(WindowEvent::KeyReleased { text: key })
+                        })
+                        .unwrap()
                 }
-            },
-            fn_output: |_window, _tx| {},
-        };
+                Custom::Gpio1(value) => {
+                    if !value {
+                        return;
+                    }
+                    let key: SharedString = SharedString::from("1");
+                    window
+                        .upgrade_in_event_loop(move |h| {
+                            h.window()
+                                .dispatch_event(WindowEvent::KeyPressed { text: key.clone() });
+                            h.window()
+                                .dispatch_event(WindowEvent::KeyReleased { text: key })
+                        })
+                        .unwrap()
+                }
+                Custom::Gpio2(value) => {
+                    if !value {
+                        return;
+                    }
+                    let key: SharedString = SharedString::from("2");
+                    window
+                        .upgrade_in_event_loop(move |h| {
+                            h.window()
+                                .dispatch_event(WindowEvent::KeyPressed { text: key.clone() });
+                            h.window()
+                                .dispatch_event(WindowEvent::KeyReleased { text: key })
+                        })
+                        .unwrap()
+                }
+                Custom::GpioBackspace(value) => {
+                    if !value {
+                        return;
+                    }
+                    let key: SharedString = slint::platform::Key::Backspace.into();
+                    window
+                        .upgrade_in_event_loop(move |h| {
+                            h.window()
+                                .dispatch_event(WindowEvent::KeyPressed { text: key.clone() });
+                            h.window()
+                                .dispatch_event(WindowEvent::KeyReleased { text: key })
+                        })
+                        .unwrap()
+                }
+            }
+        },
+        fn_output: |_window, _tx| {},
+    };
 
     // executor ------------------------------------------------------------------------------------
     let executor_config = ComponentExecutorConfig {
@@ -121,7 +111,7 @@ async fn main_executor(slint_inst: Weak<MainWindow>) {
 
     ComponentExecutor::<Custom>::new(executor_config)
         .add_cmp(cmp_slint::Cmp::new(config_slint))
-        .add_cmp(cmp_raspberrypi_gpio::Cmp::new(config_raspberrypi_gpio))
+        // .add_cmp(cmp_raspberrypi_gpio::Cmp::new(config_raspberrypi_gpio))
         .wait_result()
         .await
         .unwrap();
