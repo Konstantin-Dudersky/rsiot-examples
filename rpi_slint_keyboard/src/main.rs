@@ -4,16 +4,18 @@ mod message;
 
 use std::{sync::Arc, time::Duration};
 
+use rand::Rng;
 use rsiot::{
-    components::{cmp_raspberrypi_gpio, cmp_slint},
+    components::{cmp_inject_periodic, cmp_raspberrypi_gpio, cmp_slint},
     executor::{ComponentExecutor, ComponentExecutorConfig},
-    message::example_service::Service,
+    message::{example_service::Service, Message},
 };
 use slint::{include_modules, platform::WindowEvent, SharedString, Weak};
 use tokio::sync::Mutex;
-use tracing::{info, Level};
+use tracing::Level;
 
 use message::*;
+use tracing_subscriber::fmt::format;
 
 include_modules!();
 
@@ -29,6 +31,17 @@ fn main() {
 
 #[tokio::main]
 async fn main_executor(slint_inst: Weak<MainWindow>) {
+    // cmp_inject_periodic -------------------------------------------------------------------------
+    let mut weight = 0.0;
+    let config_inject_periodic = cmp_inject_periodic::Config {
+        period: Duration::from_millis(100),
+        fn_periodic: move || {
+            let msg = Message::new_custom(Custom::Weight(weight));
+            weight += 0.1;
+            vec![msg]
+        },
+    };
+
     // cmp_raspberrypi_gpio ------------------------------------------------------------------------
     let config_raspberrypi_gpio = config_raspberrypi_gpio::config();
 
@@ -54,11 +67,14 @@ async fn main_executor(slint_inst: Weak<MainWindow>) {
                         })
                         .unwrap()
                 }
-                Custom::Gpio1(value) => {
+                Custom::GpioNumber(value) => {
                     if !value {
                         return;
                     }
-                    let key: SharedString = SharedString::from("1");
+                    let mut rng = rand::thread_rng();
+                    let value = rng.gen_range(0..10);
+                    let key: SharedString = SharedString::from(value.to_string());
+
                     window
                         .upgrade_in_event_loop(move |h| {
                             h.window()
@@ -68,11 +84,12 @@ async fn main_executor(slint_inst: Weak<MainWindow>) {
                         })
                         .unwrap()
                 }
-                Custom::Gpio2(value) => {
+                Custom::GpioEnter(value) => {
                     if !value {
                         return;
                     }
-                    let key: SharedString = SharedString::from("2");
+                    let key: SharedString = slint::platform::Key::Return.into();
+
                     window
                         .upgrade_in_event_loop(move |h| {
                             h.window()
@@ -96,6 +113,13 @@ async fn main_executor(slint_inst: Weak<MainWindow>) {
                         })
                         .unwrap()
                 }
+                Custom::Weight(weight) => {
+                    let weight = format!("{weight:.1} ℃");
+                    let weight: SharedString = weight.into();
+                    window
+                        .upgrade_in_event_loop(move |h| h.global::<GlobalData>().set_weight(weight))
+                        .unwrap()
+                }
             }
         },
         fn_output: |_window, _tx| {},
@@ -111,7 +135,8 @@ async fn main_executor(slint_inst: Weak<MainWindow>) {
 
     ComponentExecutor::<Custom>::new(executor_config)
         .add_cmp(cmp_slint::Cmp::new(config_slint))
-        // .add_cmp(cmp_raspberrypi_gpio::Cmp::new(config_raspberrypi_gpio))
+        .add_cmp(cmp_raspberrypi_gpio::Cmp::new(config_raspberrypi_gpio))
+        .add_cmp(cmp_inject_periodic::Cmp::new(config_inject_periodic))
         .wait_result()
         .await
         .unwrap();

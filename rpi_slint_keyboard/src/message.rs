@@ -4,9 +4,10 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
 pub enum Custom {
     GpioTab(bool),
-    Gpio1(bool),
-    Gpio2(bool),
+    GpioNumber(bool),
+    GpioEnter(bool),
     GpioBackspace(bool),
+    Weight(f64),
 }
 
 impl MsgDataBound for Custom {

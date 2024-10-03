@@ -1,83 +1,190 @@
 import { Button, LineEdit } from "std-widgets.slint";
 
 export global GlobalData {
-    in property <string> os_version: "OS";
-    in property <string> host_name: "hostname";
-
-    in property <string> eth0_mac: "nw_0_mac";
-    in property <string> wlan0_mac: "nw_0_mac";
-
-    in property <string> cpu_load: "100.0% 100.0% 100.0% 100.0%";
-
-    in property <string> cpu_temp: "100.0 ℃";
-
-    in property <string> memory: "1000 MB / 4000 MB";
-    in property <string> swap: "1000 MB / 4000 MB";
-
-    in property <string> dev_sda_1: "1000 GB / 4000 GB";
-    in property <string> dev_sda_2: "1000 GB / 4000 GB";
-
     pure callback button(int);
+
+    in property <int> screen_visible;
+
+    in property <string> weight;
 }
 
 global Style {
-    // in property <color> TEXT_COLOR: black;
     in property <length> FONT_SIZE: 18pt;
+    in property <length> FONT_SIZE_HEADER: 26pt;
 }
 
-export component MainWindow inherits Window {
-    width: 800px;
-    height: 480px;
+component ButtonText inherits Rectangle {
+    in property <string> text;
+    callback clicked <=> button.clicked;
+    in property <length> x_;
+    in property <length> y_;
 
-    LineEdit {
-        x: 400px;
-        y: 280px;
-        width: 200px;
-        font-size: Style.FONT_SIZE;
-        placeholder-text: "Text 1";
-    }
-
-    LineEdit {
-        x: 400px;
-        y: 360px;
-        width: 200px;
-        font-size: Style.FONT_SIZE;
-        placeholder-text: "Text 2";
-    }
-
-    // Навигация
-    Button {
-        x: 5px;
-        y: 425px;
-        width: 90px;
-        height: 50px;
-        text: "1";
-    }
-
-    Button {
-        x: 105px;
-        y: 425px;
-        width: 90px;
-        height: 50px;
-        text: "2";
-    }
-
-    Button {
-        x: 205px;
-        y: 425px;
+    button := Button {
+        x: x_;
+        y: y_;
         width: 90px;
         height: 50px;
         text: "";
     }
 
     Text {
-        x: 205px;
-        y: 425px;
+        x: x_;
+        y: y_;
         width: 90px;
         height: 50px;
-        text: "3";
+        text: text;
         horizontal-alignment: TextHorizontalAlignment.center;
         vertical-alignment: TextVerticalAlignment.center;
         font-size: Style.FONT_SIZE;
+    }
+}
+
+component ButtonImage inherits Rectangle {
+    in property <image> source;
+    callback clicked <=> button.clicked;
+
+    in property <length> x_;
+    in property <length> y_;
+
+    button := Button {
+        x: x_;
+        y: y_;
+        width: 90px;
+        height: 50px;
+        text: "";
+    }
+
+    Image {
+        x: x_;
+        y: y_;
+        width: 90px;
+        height: 50px;
+        source: source;
+        horizontal-alignment: ImageHorizontalAlignment.center;
+        vertical-alignment: ImageVerticalAlignment.center;
+        image-fit: ImageFit.contain;
+        colorize: white;
+    }
+}
+
+component Screen1 {
+    Text {
+        font-size: Style.FONT_SIZE_HEADER;
+        y: 10px;
+        text: "Экран 1";
+    }
+
+    Text {
+        x: 0px;
+        y: 60px;
+        width: parent.width;
+        height: parent.height - 120px;
+        text: GlobalData.weight;
+        horizontal-alignment: TextHorizontalAlignment.center;
+        vertical-alignment: TextVerticalAlignment.center;
+        font-size: 160px;
+    }
+}
+
+component Screen2 {
+    Text {
+        font-size: Style.FONT_SIZE_HEADER;
+        y: 10px;
+        text: "Экран 2";
+    }
+
+    Text {
+        x: 10px;
+        y: 100px;
+        text: "Уставка 1";
+        font-size: Style.FONT_SIZE;
+    }
+
+    LineEdit {
+        x: 200px;
+        y: 100px;
+        width: 200px;
+        font-size: Style.FONT_SIZE;
+        placeholder-text: "Text 1";
+    }
+
+    Text {
+        x: 10px;
+        y: 160px;
+        text: "Уставка 2";
+        font-size: Style.FONT_SIZE;
+    }
+
+    LineEdit {
+        x: 200px;
+        y: 160px;
+        width: 200px;
+        font-size: Style.FONT_SIZE;
+        placeholder-text: "Text 2";
+    }
+}
+
+component Screen3 {
+    Text {
+        font-size: Style.FONT_SIZE_HEADER;
+        y: 10px;
+        text: "Экран 3";
+    }
+}
+
+export component MainWindow inherits Window {
+    width: 800px;
+    height: 480px;
+
+    Screen1 {
+        x: 0px;
+        y: 0px;
+        width: parent.width;
+        height: parent.height;
+        visible: GlobalData.screen_visible == 0;
+    }
+
+    Screen2 {
+        x: 0px;
+        y: 0px;
+        width: parent.width;
+        height: parent.height;
+        visible: GlobalData.screen_visible == 1;
+    }
+
+    Screen3 {
+        x: 0px;
+        y: 0px;
+        width: parent.width;
+        height: parent.height;
+        visible: GlobalData.screen_visible == 2;
+    }
+
+    // Навигация
+    ButtonImage {
+        x: 5px;
+        y: 425px;
+        source: @image-url("./icons/material-symbols--home-rounded.svg");
+        clicked => {
+            GlobalData.screen_visible = 0;
+        }
+    }
+
+    ButtonImage {
+        x: 105px;
+        y: 425px;
+        source: @image-url("./icons/material-symbols--settings-rounded.svg");
+        clicked => {
+            GlobalData.screen_visible = 1;
+        }
+    }
+
+    ButtonImage {
+        x: 205px;
+        y: 425px;
+        source: @image-url("./icons/material-symbols--error-rounded.svg");
+        clicked => {
+            GlobalData.screen_visible = 2;
+        }
     }
 }
