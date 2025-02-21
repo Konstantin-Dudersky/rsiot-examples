@@ -1,13 +1,15 @@
+mod test_device;
+
 use std::time::Duration;
 
 use rsiot::{
     components::{
         cmp_inject_periodic,
-        cmp_linux_uart_master::{self, devices::test_device},
+        cmp_linux_uart_master::{self},
         cmp_logger,
     },
     executor::{ComponentExecutor, ComponentExecutorConfig},
-    message::{example_service::Service, Message},
+    message::Message,
 };
 use tracing::Level;
 
@@ -43,16 +45,16 @@ async fn main() {
     };
 
     // cmp_linux_uart ------------------------------------------------------------------------------
-    let config_linux_uart = cmp_linux_uart_master::Config {
-        // port: "/dev/ttyAMA0",
-        port: "/dev/ttyUSB0",
+    let config_linux_uart = cmp_linux_uart_master::Config::<_> {
+        port: "/dev/ttyAMA0",
+        // port: "/dev/ttyUSB0",
         baudrate: cmp_linux_uart_master::Baudrate::_115_200,
         data_bits: cmp_linux_uart_master::DataBits::_8,
         stop_bits: cmp_linux_uart_master::StopBits::_1,
         parity: cmp_linux_uart_master::Parity::None,
-        wait_after_write: Duration::from_millis(50),
+        timeout: Duration::from_millis(20),
         gpio_chip: "/dev/gpiochip0",
-        pin_rts: None,
+        pin_rts: Some(23),
         devices: vec![Box::new(test_device::TestDevice {
             address: 1,
             fn_input: |msg, buffer| {
@@ -73,12 +75,12 @@ async fn main() {
     // executor ------------------------------------------------------------------------------------
     let executor_config = ComponentExecutorConfig {
         buffer_size: 100,
-        service: Service::example_service,
+        service: Services::Rpi,
         delay_publish: Duration::from_millis(100),
         fn_auth: |msg, _| Some(msg),
     };
 
-    ComponentExecutor::<Custom>::new(executor_config)
+    ComponentExecutor::<Custom, Services>::new(executor_config)
         .add_cmp(cmp_logger::Cmp::new(logger_config))
         .add_cmp(cmp_linux_uart_master::Cmp::new(config_linux_uart))
         .add_cmp(cmp_inject_periodic::Cmp::new(config_inject_periodic))

@@ -3,11 +3,14 @@ mod leptos_components;
 mod material_components;
 mod messages;
 mod plc;
+mod stores;
 
 use std::time::Duration;
 
-use any_spawner::Executor;
-use leptos::{prelude::*, task::spawn_local};
+use leptos::{
+    prelude::*,
+    task::{spawn_local, Executor},
+};
 use rsiot::{
     components::{cmp_leptos, cmp_plc, cmp_webstorage},
     executor::{ComponentExecutor, ComponentExecutorConfig},
@@ -17,6 +20,8 @@ use rsiot::{
 use tokio::task::LocalSet;
 
 use app::*;
+use stores::{InputStore, InputStoreStoreFields, OutputStore, OutputStoreStoreFields};
+
 use messages::*;
 
 fn main() -> anyhow::Result<()> {
@@ -25,7 +30,24 @@ fn main() -> anyhow::Result<()> {
     // cmp_leptos ----------------------------------------------------------------------------------
     let config_leptos = cmp_leptos::Config {
         body_component: || view! { <App/> },
-        hostname: "localhost".into(),
+        input_store: InputStore::default(),
+        output_store: OutputStore::default(),
+        fn_input: |msg, store| {
+            let Some(msg) = msg.get_custom_data() else {
+                return;
+            };
+            match msg {
+                Custom::m1_status(qhmi_status) => store.m1_status().set(qhmi_status),
+                _ => (),
+            }
+        },
+        fn_output: |store, tx| {
+            Effect::new(move || {
+                let m1_command = store.m1_command().get();
+                let msg = Custom::m1_command(m1_command);
+                tx.blocking_send(msg).unwrap();
+            });
+        },
     };
 
     // cmp_plc -------------------------------------------------------------------------------------
@@ -79,7 +101,7 @@ fn main() -> anyhow::Result<()> {
     let context = LocalSet::new();
 
     context.spawn_local(async move {
-        ComponentExecutor::<Custom>::new(config_executor)
+        ComponentExecutor::<Custom, Service>::new(config_executor)
             .add_cmp(cmp_leptos::Cmp::new(config_leptos))
             .add_cmp(cmp_plc::Cmp::new(config_plc))
             .add_cmp(cmp_webstorage::Cmp::new(config_webstorage))

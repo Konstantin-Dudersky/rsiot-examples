@@ -1,4 +1,6 @@
 use leptos::prelude::*;
+use reactive_stores::Store;
+use rsiot::components::cmp_plc::plc::library::drives as plc_drives;
 use rsiot::{
     components::cmp_leptos::{
         components::{
@@ -10,12 +12,20 @@ use rsiot::{
     message::*,
 };
 
-use crate::messages::*;
+use crate::{messages::*, stores::*};
 
 #[component]
 pub fn Drives() -> impl IntoView {
-    let (motor_status, _) = create_signal_from_msg!("Custom-m1_status");
-    let (_, motor_command) = create_signal_from_msg!("Custom-m1_command");
+    let input_store = expect_context::<Store<InputStore>>();
+    let output_store = expect_context::<Store<OutputStore>>();
+
+    let motor_status = Signal::derive(move || input_store.m1_status().get());
+
+    let (motor_command, motor_command_set) = signal(plc_drives::motor::IHmiCommand::default());
+    Effect::new(move || {
+        let motor_command = motor_command.get();
+        output_store.m1_command().set(motor_command);
+    });
 
     let (valve_analog_status, _) = create_signal_from_msg!("Custom-valve_analog_status");
     let (_, valve_analog_command) = create_signal_from_msg!("Custom-valve_analog_command");
@@ -56,7 +66,7 @@ pub fn Drives() -> impl IntoView {
         <drives::Motor
             title = "Двигатель"
             hmi_status = motor_status
-            hmi_command = motor_command
+            hmi_command = motor_command_set
             visible = Signal::derive(move || fpt.get() == "motor")
             on_close = close_fpt
         />

@@ -11,5 +11,7 @@ rsiot = { path = "../../../rsiot", features = [
 tokio = { version = "*", features = ["macros", "rt-multi-thread"] }
 tracing = "*"
 tracing-subscriber = "*"
+async-trait = "*"
+serde = { version = "*", features = ["derive"] }
 
 messages = { version = "*", path = "../messages" }
