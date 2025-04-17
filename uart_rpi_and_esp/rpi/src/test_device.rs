@@ -3,16 +3,20 @@
 use std::time::Duration;
 
 use async_trait::async_trait;
+use rsiot::components_config::uart_general::protocol::UartPacket;
+use rsiot::serde_utils::SerdeAlgKind;
 use serde::{Deserialize, Serialize};
 use tokio::sync::{broadcast, mpsc};
 
-use rsiot::components_config::uart_general::{UartRequest, UartResponse};
+use rsiot::components_config::uart_general::{
+    protocol::Protocol, FieldbusRequest, FieldbusResponse,
+};
 use rsiot::message::{Message, MsgDataBound};
 
 use rsiot::components_config::master_device::{
     self, BufferBound, ConfigPeriodicRequest, DeviceBase, DeviceTrait,
 };
-use tracing::{info, warn};
+use tracing::info;
 
 /// Тестовое устройство
 #[derive(Clone, Debug)]
@@ -28,48 +32,51 @@ pub struct TestDevice<TMsg> {
 }
 
 #[async_trait]
-impl<TMsg> DeviceTrait<TMsg, UartRequest, UartResponse, u8> for TestDevice<TMsg>
+impl<TMsg> DeviceTrait<TMsg, FieldbusRequest, FieldbusResponse> for TestDevice<TMsg>
 where
     TMsg: MsgDataBound + 'static,
 {
     async fn spawn(
         self: Box<Self>,
         ch_rx_msgbus_to_device: broadcast::Receiver<Message<TMsg>>,
-        ch_tx_device_to_fieldbus: mpsc::Sender<UartRequest>,
-        ch_rx_fieldbus_to_device: broadcast::Receiver<UartResponse>,
+        ch_tx_device_to_fieldbus: mpsc::Sender<FieldbusRequest>,
+        ch_rx_fieldbus_to_device: mpsc::Receiver<FieldbusResponse>,
         ch_tx_device_to_msgbus: mpsc::Sender<Message<TMsg>>,
     ) -> master_device::Result<()> {
         let device = DeviceBase {
-            address: self.address,
             fn_init_requests: || vec![],
             periodic_requests: vec![ConfigPeriodicRequest {
                 period: Duration::from_millis(100),
-                fn_requests: |_buffer| vec![UartRequest::new(Request::GetCounterFromEsp)],
+                fn_requests: |buffer: &Buffer| {
+                    let req = buffer
+                        .protocol
+                        .serialize_request(Request::GetCounterFromEsp)?;
+                    Ok(vec![req])
+                },
             }],
             fn_msgs_to_buffer: self.fn_input,
-            fn_buffer_to_request: |_buffer: &Buffer| {
-                // vec![FieldbusRequest::new(Request::SetCounterRpi(
-                //     buffer.counter_rpi,
-                // ))]
-                vec![]
+            fn_buffer_to_request: |buffer: &Buffer| {
+                let req = buffer
+                    .protocol
+                    .serialize_request(Request::SetCounterRpi(buffer.counter_rpi))?;
+                Ok(vec![req])
             },
-            fn_response_to_buffer: |mut response: UartResponse, buffer: &mut Buffer| {
-                // info!("Response: {:?}", response);
-                let response = response.get_payload();
-                let response = match response {
-                    Ok(val) => val,
-                    Err(err) => {
-                        warn!("Deserialization error: {:?}", err);
-                        return;
-                    }
-                };
-                match response {
+            fn_response_to_buffer: |response: FieldbusResponse, buffer: &mut Buffer| {
+                let packet: UartPacket<Response> =
+                    buffer.protocol.deserialize_response(response)?;
+
+                match packet.data {
                     Response::CounterFromEsp(val) => buffer.counter_esp = val,
                     Response::Ok => (),
+                    Response::VeryLongAnswer(data) => info!("VeryLongAnswer: {}", data),
                 }
+                Ok(())
             },
             fn_buffer_to_msgs: self.fn_output,
-            buffer_default: Buffer::default(),
+            buffer_default: Buffer {
+                protocol: Protocol::new(self.address, SerdeAlgKind::Postcard),
+                ..Default::default()
+            },
         };
         device
             .spawn(
@@ -97,6 +104,7 @@ pub enum Request {
 pub enum Response {
     /// Счетчик из ESP32
     CounterFromEsp(u32),
+    VeryLongAnswer(String),
     /// Ok
     Ok,
 }
@@ -104,6 +112,8 @@ pub enum Response {
 /// Буфер данных
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct Buffer {
+    pub protocol: Protocol,
+
     /// Счетчик из Rpi
     pub counter_rpi: u32,
     /// Счетчик из ESP32

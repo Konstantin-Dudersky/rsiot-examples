@@ -75,12 +75,11 @@ async fn main() {
     // executor ------------------------------------------------------------------------------------
     let executor_config = ComponentExecutorConfig {
         buffer_size: 100,
-        service: Services::Rpi,
         delay_publish: Duration::from_millis(100),
         fn_auth: |msg, _| Some(msg),
     };
 
-    ComponentExecutor::<Custom, Services>::new(executor_config)
+    ComponentExecutor::<Custom>::new(executor_config)
         .add_cmp(cmp_logger::Cmp::new(logger_config))
         .add_cmp(cmp_linux_uart_master::Cmp::new(config_linux_uart))
         .add_cmp(cmp_inject_periodic::Cmp::new(config_inject_periodic))

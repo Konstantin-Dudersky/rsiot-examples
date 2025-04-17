@@ -27,6 +27,7 @@ rsiot = { path = "../../../rsiot", features = [
     "cmp_esp",
     "logging",
     "single-thread",
+    "serde_postcard",
 ] }
 tokio = { version = "*", features = ["macros", "rt"] }
 tracing = "*"

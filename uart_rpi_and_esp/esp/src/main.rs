@@ -6,16 +6,20 @@ use rsiot::{
         cmp_esp_uart_slave::{self},
         cmp_inject_periodic, cmp_logger,
     },
-    components_config::uart_general::{UartRequest, UartResponse},
+    components_config::uart_general::{
+        protocol::{Protocol, UartPacket},
+        FieldbusRequest,
+    },
     executor::{ComponentExecutor, ComponentExecutorConfig},
     logging::configure_logging,
     message::Message,
+    serde_utils::SerdeAlgKind,
 };
 use serde::{Deserialize, Serialize};
 use tokio::task::LocalSet;
 use tracing::{info, level_filters::LevelFilter, Level};
 
-use messages::{Custom, Services};
+use messages::Custom;
 
 #[tokio::main(flavor = "current_thread")]
 async fn main() {
@@ -42,7 +46,6 @@ async fn main() {
 
     // cmp_esp_uart_slave --------------------------------------------------------------------------
     let config_esp_uart_slave = cmp_esp_uart_slave::Config::<_, _, _, _> {
-        address: 1,
         uart: peripherals.uart1,
         pin_rx: peripherals.pins.gpio20.into(),
         pin_tx: peripherals.pins.gpio21.into(),
@@ -51,7 +54,10 @@ async fn main() {
         data_bits: cmp_esp_uart_slave::DataBits::_8,
         parity: cmp_esp_uart_slave::Parity::None,
         stop_bits: cmp_esp_uart_slave::StopBits::_1,
-        buffer_data_default: BufferData::default(),
+        buffer_data_default: BufferData {
+            protocol: Protocol::new(1, SerdeAlgKind::Postcard),
+            ..Default::default()
+        },
         fn_input: |msg: &Message<Custom>, buffer: &mut BufferData| {
             let Some(msg) = msg.get_custom_data() else {
                 return;
@@ -60,20 +66,20 @@ async fn main() {
                 buffer.counter_esp = counter;
             }
         },
-        fn_uart_comm: |mut fieldbus_request: UartRequest, buffer: &mut BufferData| {
-            let request: Request = fieldbus_request.get_payload()?;
+        fn_uart_comm: |fieldbus_request: FieldbusRequest, buffer: &mut BufferData| {
+            let request: UartPacket<Request> =
+                buffer.protocol.deserialize_request(fieldbus_request)?;
 
             info!("Request: {:?}", request);
 
-            let response = match request {
+            let response = match request.data {
                 Request::GetCounterFromEsp => Response::CounterFromEsp(buffer.counter_esp),
                 Request::SetCounter(counter_rpi) => {
                     buffer.counter_rpi = counter_rpi;
                     Response::Ok
                 }
             };
-            let response = UartResponse::new(response);
-
+            let response = buffer.protocol.serialize_response(response)?;
             Ok(response)
         },
         fn_output: |buffer| {
@@ -97,7 +103,6 @@ async fn main() {
     // executor ------------------------------------------------------------------------------------
     let executor_config = ComponentExecutorConfig {
         buffer_size: 100,
-        service: Services::Esp,
         fn_auth: |msg, _| Some(msg),
         delay_publish: Duration::from_millis(100),
     };
@@ -105,7 +110,7 @@ async fn main() {
     let local_set = LocalSet::new();
 
     local_set.spawn_local(async {
-        ComponentExecutor::<Custom, Services>::new(executor_config)
+        ComponentExecutor::<Custom>::new(executor_config)
             .add_cmp(cmp_logger::Cmp::new(config_logger))
             .add_cmp(cmp_inject_periodic::Cmp::new(config_inject_periodic))
             .add_cmp(cmp_esp_uart_slave::Cmp::new(config_esp_uart_slave))
@@ -119,6 +124,7 @@ async fn main() {
 
 #[derive(Default)]
 struct BufferData {
+    pub protocol: Protocol,
     pub counter_esp: u32,
     pub counter_rpi: u32,
 }
@@ -137,10 +143,7 @@ pub enum Request {
 pub enum Response {
     /// Счетчик из ESP32
     CounterFromEsp(u32),
+    VeryLongAnswer(String),
     /// Ok
     Ok,
 }
-
-/// Буфер данных
-#[derive(Default)]
-pub struct Buffer {}
