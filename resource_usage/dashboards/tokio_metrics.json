@@ -1,0 +1,5345 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 1,
+  "links": [],
+  "panels": [
+    {
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "PA9F31A8E1DD881EA"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 2,
+        "x": 0,
+        "y": 0
+      },
+      "id": 2,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.0.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "PA9F31A8E1DD881EA"
+          },
+          "editorMode": "builder",
+          "format": "table",
+          "rawSql": "SELECT value FROM raw WHERE ($__timeFilter(\"time\") AND entity = 'tokio_runtime' AND attr = 'workers_count') ORDER BY \"time\" DESC LIMIT 1 ",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [
+                  {
+                    "name": "value",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 1,
+            "orderBy": {
+              "property": {
+                "name": "\"time\"",
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "orderByDirection": "DESC",
+            "whereJsonTree": {
+              "children1": [
+                {
+                  "id": "b998ab9b-0123-4456-b89a-b1985a52428b",
+                  "properties": {
+                    "field": "\"time\"",
+                    "fieldSrc": "field",
+                    "operator": "macros",
+                    "value": ["timeFilter"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["datetime"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "9bba8b99-cdef-4012-b456-71985a52e632",
+                  "properties": {
+                    "field": "entity",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["tokio_runtime"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "9b8ab989-89ab-4cde-b012-31985a537550",
+                  "properties": {
+                    "field": "attr",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["workers_count"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                }
+              ],
+              "id": "a8988888-0123-4456-b89a-b1985a3aaddf",
+              "type": "group"
+            },
+            "whereString": "($__timeFilter(\"time\") AND entity = 'tokio_runtime' AND attr = 'workers_count')"
+          },
+          "table": "raw"
+        }
+      ],
+      "title": "workers_count",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "PA9F31A8E1DD881EA"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 1,
+          "fieldMinMax": false,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 2,
+        "x": 2,
+        "y": 0
+      },
+      "id": 5,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.0.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "PA9F31A8E1DD881EA"
+          },
+          "editorMode": "builder",
+          "format": "table",
+          "rawSql": "SELECT value FROM raw WHERE ($__timeFilter(\"time\") AND entity = 'tokio_runtime' AND attr = 'elapsed') ORDER BY \"time\" DESC LIMIT 1 ",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [
+                  {
+                    "name": "value",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 1,
+            "orderBy": {
+              "property": {
+                "name": "\"time\"",
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "orderByDirection": "DESC",
+            "whereJsonTree": {
+              "children1": [
+                {
+                  "id": "b998ab9b-0123-4456-b89a-b1985a52428b",
+                  "properties": {
+                    "field": "\"time\"",
+                    "fieldSrc": "field",
+                    "operator": "macros",
+                    "value": ["timeFilter"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["datetime"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "9bba8b99-cdef-4012-b456-71985a52e632",
+                  "properties": {
+                    "field": "entity",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["tokio_runtime"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "9b8ab989-89ab-4cde-b012-31985a537550",
+                  "properties": {
+                    "field": "attr",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["elapsed"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                }
+              ],
+              "id": "a8988888-0123-4456-b89a-b1985a3aaddf",
+              "type": "group"
+            },
+            "whereString": "($__timeFilter(\"time\") AND entity = 'tokio_runtime' AND attr = 'elapsed')"
+          },
+          "table": "raw"
+        }
+      ],
+      "title": "elapsed",
+      "type": "stat"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 3
+      },
+      "id": 22,
+      "panels": [],
+      "title": "Row title",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "PA9F31A8E1DD881EA"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 4
+      },
+      "id": 1,
+      "options": {
+        "legend": {
+          "calcs": ["lastNotNull", "min", "max", "mean"],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.0.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "PA9F31A8E1DD881EA"
+          },
+          "editorMode": "builder",
+          "format": "table",
+          "rawSql": "SELECT \"time\", value FROM raw WHERE (entity = 'tokio_runtime' AND attr = 'busy_ratio' AND $__timeFilter(\"time\")) ORDER BY \"time\" ",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [
+                  {
+                    "name": "\"time\"",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "parameters": [
+                  {
+                    "name": "value",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "orderBy": {
+              "property": {
+                "name": "\"time\"",
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "whereJsonTree": {
+              "children1": [
+                {
+                  "id": "8b8a8abb-cdef-4012-b456-71985a269f66",
+                  "properties": {
+                    "field": "entity",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["tokio_runtime"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "89a99aba-89ab-4cde-b012-31985a26f0a6",
+                  "properties": {
+                    "field": "attr",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["busy_ratio"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "b888aa8a-4567-489a-bcde-f1985a317ade",
+                  "properties": {
+                    "field": "\"time\"",
+                    "fieldSrc": "field",
+                    "operator": "macros",
+                    "value": ["timeFilter"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["datetime"]
+                  },
+                  "type": "rule"
+                }
+              ],
+              "id": "b89ba98a-0123-4456-b89a-b1985a24e5c1",
+              "type": "group"
+            },
+            "whereString": "(entity = 'tokio_runtime' AND attr = 'busy_ratio' AND $__timeFilter(\"time\"))"
+          },
+          "table": "raw"
+        }
+      ],
+      "title": "busy_ratio",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "PA9F31A8E1DD881EA"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 8,
+        "x": 0,
+        "y": 13
+      },
+      "id": 13,
+      "options": {
+        "legend": {
+          "calcs": ["lastNotNull", "min", "max"],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.0.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "PA9F31A8E1DD881EA"
+          },
+          "editorMode": "builder",
+          "format": "table",
+          "rawSql": "SELECT \"time\", value AS \"total_park_count\" FROM raw WHERE (entity = 'tokio_runtime' AND attr = 'total_park_count' AND $__timeFilter(\"time\")) ORDER BY \"time\" ",
+          "refId": "total_park_count",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [
+                  {
+                    "name": "\"time\"",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"total_park_count\"",
+                "parameters": [
+                  {
+                    "name": "value",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "orderBy": {
+              "property": {
+                "name": "\"time\"",
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "whereJsonTree": {
+              "children1": [
+                {
+                  "id": "8b8a8abb-cdef-4012-b456-71985a269f66",
+                  "properties": {
+                    "field": "entity",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["tokio_runtime"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "89a99aba-89ab-4cde-b012-31985a26f0a6",
+                  "properties": {
+                    "field": "attr",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["total_park_count"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "b888aa8a-4567-489a-bcde-f1985a317ade",
+                  "properties": {
+                    "field": "\"time\"",
+                    "fieldSrc": "field",
+                    "operator": "macros",
+                    "value": ["timeFilter"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["datetime"]
+                  },
+                  "type": "rule"
+                }
+              ],
+              "id": "b89ba98a-0123-4456-b89a-b1985a24e5c1",
+              "type": "group"
+            },
+            "whereString": "(entity = 'tokio_runtime' AND attr = 'total_park_count' AND $__timeFilter(\"time\"))"
+          },
+          "table": "raw"
+        },
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "PA9F31A8E1DD881EA"
+          },
+          "editorMode": "builder",
+          "format": "table",
+          "hide": false,
+          "rawSql": "SELECT \"time\", value AS \"max_park_count\" FROM raw WHERE (entity = 'tokio_runtime' AND attr = 'max_park_count' AND $__timeFilter(\"time\")) ORDER BY \"time\" ",
+          "refId": "max_park_count",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [
+                  {
+                    "name": "\"time\"",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"max_park_count\"",
+                "parameters": [
+                  {
+                    "name": "value",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "orderBy": {
+              "property": {
+                "name": "\"time\"",
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "whereJsonTree": {
+              "children1": [
+                {
+                  "id": "8b8a8abb-cdef-4012-b456-71985a269f66",
+                  "properties": {
+                    "field": "entity",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["tokio_runtime"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "89a99aba-89ab-4cde-b012-31985a26f0a6",
+                  "properties": {
+                    "field": "attr",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["max_park_count"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "b888aa8a-4567-489a-bcde-f1985a317ade",
+                  "properties": {
+                    "field": "\"time\"",
+                    "fieldSrc": "field",
+                    "operator": "macros",
+                    "value": ["timeFilter"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["datetime"]
+                  },
+                  "type": "rule"
+                }
+              ],
+              "id": "b89ba98a-0123-4456-b89a-b1985a24e5c1",
+              "type": "group"
+            },
+            "whereString": "(entity = 'tokio_runtime' AND attr = 'max_park_count' AND $__timeFilter(\"time\"))"
+          },
+          "table": "raw"
+        },
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "PA9F31A8E1DD881EA"
+          },
+          "editorMode": "builder",
+          "format": "table",
+          "hide": false,
+          "rawSql": "SELECT \"time\", value AS \"min_park_count\" FROM raw WHERE (entity = 'tokio_runtime' AND attr = 'min_park_count' AND $__timeFilter(\"time\")) ORDER BY \"time\" ",
+          "refId": "min_park_count",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [
+                  {
+                    "name": "\"time\"",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"min_park_count\"",
+                "parameters": [
+                  {
+                    "name": "value",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "orderBy": {
+              "property": {
+                "name": "\"time\"",
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "whereJsonTree": {
+              "children1": [
+                {
+                  "id": "8b8a8abb-cdef-4012-b456-71985a269f66",
+                  "properties": {
+                    "field": "entity",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["tokio_runtime"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "89a99aba-89ab-4cde-b012-31985a26f0a6",
+                  "properties": {
+                    "field": "attr",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["min_park_count"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "b888aa8a-4567-489a-bcde-f1985a317ade",
+                  "properties": {
+                    "field": "\"time\"",
+                    "fieldSrc": "field",
+                    "operator": "macros",
+                    "value": ["timeFilter"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["datetime"]
+                  },
+                  "type": "rule"
+                }
+              ],
+              "id": "b89ba98a-0123-4456-b89a-b1985a24e5c1",
+              "type": "group"
+            },
+            "whereString": "(entity = 'tokio_runtime' AND attr = 'min_park_count' AND $__timeFilter(\"time\"))"
+          },
+          "table": "raw"
+        }
+      ],
+      "title": "park_count",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "PA9F31A8E1DD881EA"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "ms"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 8,
+        "x": 8,
+        "y": 13
+      },
+      "id": 11,
+      "options": {
+        "legend": {
+          "calcs": ["lastNotNull", "min", "max"],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.0.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "PA9F31A8E1DD881EA"
+          },
+          "editorMode": "builder",
+          "format": "table",
+          "rawSql": "SELECT \"time\", value AS \"total_busy_duration\" FROM raw WHERE (entity = 'tokio_runtime' AND attr = 'total_busy_duration' AND $__timeFilter(\"time\")) ORDER BY \"time\" ",
+          "refId": "total_busy_duration",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [
+                  {
+                    "name": "\"time\"",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"total_busy_duration\"",
+                "parameters": [
+                  {
+                    "name": "value",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "orderBy": {
+              "property": {
+                "name": "\"time\"",
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "whereJsonTree": {
+              "children1": [
+                {
+                  "id": "8b8a8abb-cdef-4012-b456-71985a269f66",
+                  "properties": {
+                    "field": "entity",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["tokio_runtime"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "89a99aba-89ab-4cde-b012-31985a26f0a6",
+                  "properties": {
+                    "field": "attr",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["total_busy_duration"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "b888aa8a-4567-489a-bcde-f1985a317ade",
+                  "properties": {
+                    "field": "\"time\"",
+                    "fieldSrc": "field",
+                    "operator": "macros",
+                    "value": ["timeFilter"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["datetime"]
+                  },
+                  "type": "rule"
+                }
+              ],
+              "id": "b89ba98a-0123-4456-b89a-b1985a24e5c1",
+              "type": "group"
+            },
+            "whereString": "(entity = 'tokio_runtime' AND attr = 'total_busy_duration' AND $__timeFilter(\"time\"))"
+          },
+          "table": "raw"
+        },
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "PA9F31A8E1DD881EA"
+          },
+          "editorMode": "builder",
+          "format": "table",
+          "hide": false,
+          "rawSql": "SELECT \"time\", value AS \"max_busy_duration\" FROM raw WHERE (entity = 'tokio_runtime' AND attr = 'max_busy_duration' AND $__timeFilter(\"time\")) ORDER BY \"time\" ",
+          "refId": "max_busy_duration",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [
+                  {
+                    "name": "\"time\"",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"max_busy_duration\"",
+                "parameters": [
+                  {
+                    "name": "value",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "orderBy": {
+              "property": {
+                "name": "\"time\"",
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "whereJsonTree": {
+              "children1": [
+                {
+                  "id": "8b8a8abb-cdef-4012-b456-71985a269f66",
+                  "properties": {
+                    "field": "entity",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["tokio_runtime"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "89a99aba-89ab-4cde-b012-31985a26f0a6",
+                  "properties": {
+                    "field": "attr",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["max_busy_duration"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "b888aa8a-4567-489a-bcde-f1985a317ade",
+                  "properties": {
+                    "field": "\"time\"",
+                    "fieldSrc": "field",
+                    "operator": "macros",
+                    "value": ["timeFilter"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["datetime"]
+                  },
+                  "type": "rule"
+                }
+              ],
+              "id": "b89ba98a-0123-4456-b89a-b1985a24e5c1",
+              "type": "group"
+            },
+            "whereString": "(entity = 'tokio_runtime' AND attr = 'max_busy_duration' AND $__timeFilter(\"time\"))"
+          },
+          "table": "raw"
+        },
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "PA9F31A8E1DD881EA"
+          },
+          "editorMode": "builder",
+          "format": "table",
+          "hide": false,
+          "rawSql": "SELECT \"time\", value AS \"min_busy_duration\" FROM raw WHERE (entity = 'tokio_runtime' AND attr = 'min_busy_duration' AND $__timeFilter(\"time\")) ORDER BY \"time\" ",
+          "refId": "min_busy_duration",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [
+                  {
+                    "name": "\"time\"",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"min_busy_duration\"",
+                "parameters": [
+                  {
+                    "name": "value",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "orderBy": {
+              "property": {
+                "name": "\"time\"",
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "whereJsonTree": {
+              "children1": [
+                {
+                  "id": "8b8a8abb-cdef-4012-b456-71985a269f66",
+                  "properties": {
+                    "field": "entity",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["tokio_runtime"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "89a99aba-89ab-4cde-b012-31985a26f0a6",
+                  "properties": {
+                    "field": "attr",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["min_busy_duration"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "b888aa8a-4567-489a-bcde-f1985a317ade",
+                  "properties": {
+                    "field": "\"time\"",
+                    "fieldSrc": "field",
+                    "operator": "macros",
+                    "value": ["timeFilter"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["datetime"]
+                  },
+                  "type": "rule"
+                }
+              ],
+              "id": "b89ba98a-0123-4456-b89a-b1985a24e5c1",
+              "type": "group"
+            },
+            "whereString": "(entity = 'tokio_runtime' AND attr = 'min_busy_duration' AND $__timeFilter(\"time\"))"
+          },
+          "table": "raw"
+        }
+      ],
+      "title": "busy_duration",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "PA9F31A8E1DD881EA"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 8,
+        "x": 16,
+        "y": 13
+      },
+      "id": 17,
+      "options": {
+        "legend": {
+          "calcs": ["lastNotNull", "min", "max"],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.0.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "PA9F31A8E1DD881EA"
+          },
+          "editorMode": "builder",
+          "format": "table",
+          "rawSql": "SELECT \"time\", value AS \"total_steal_count\" FROM raw WHERE (entity = 'tokio_runtime' AND attr = 'total_steal_count' AND $__timeFilter(\"time\")) ORDER BY \"time\" ",
+          "refId": "total_steal_count",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [
+                  {
+                    "name": "\"time\"",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"total_steal_count\"",
+                "parameters": [
+                  {
+                    "name": "value",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "orderBy": {
+              "property": {
+                "name": "\"time\"",
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "whereJsonTree": {
+              "children1": [
+                {
+                  "id": "8b8a8abb-cdef-4012-b456-71985a269f66",
+                  "properties": {
+                    "field": "entity",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["tokio_runtime"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "89a99aba-89ab-4cde-b012-31985a26f0a6",
+                  "properties": {
+                    "field": "attr",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["total_steal_count"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "b888aa8a-4567-489a-bcde-f1985a317ade",
+                  "properties": {
+                    "field": "\"time\"",
+                    "fieldSrc": "field",
+                    "operator": "macros",
+                    "value": ["timeFilter"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["datetime"]
+                  },
+                  "type": "rule"
+                }
+              ],
+              "id": "b89ba98a-0123-4456-b89a-b1985a24e5c1",
+              "type": "group"
+            },
+            "whereString": "(entity = 'tokio_runtime' AND attr = 'total_steal_count' AND $__timeFilter(\"time\"))"
+          },
+          "table": "raw"
+        },
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "PA9F31A8E1DD881EA"
+          },
+          "editorMode": "builder",
+          "format": "table",
+          "hide": false,
+          "rawSql": "SELECT \"time\", value AS \"max_steal_count\" FROM raw WHERE (entity = 'tokio_runtime' AND attr = 'max_steal_count' AND $__timeFilter(\"time\")) ORDER BY \"time\" ",
+          "refId": "max_steal_count",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [
+                  {
+                    "name": "\"time\"",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"max_steal_count\"",
+                "parameters": [
+                  {
+                    "name": "value",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "orderBy": {
+              "property": {
+                "name": "\"time\"",
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "whereJsonTree": {
+              "children1": [
+                {
+                  "id": "8b8a8abb-cdef-4012-b456-71985a269f66",
+                  "properties": {
+                    "field": "entity",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["tokio_runtime"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "89a99aba-89ab-4cde-b012-31985a26f0a6",
+                  "properties": {
+                    "field": "attr",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["max_steal_count"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "b888aa8a-4567-489a-bcde-f1985a317ade",
+                  "properties": {
+                    "field": "\"time\"",
+                    "fieldSrc": "field",
+                    "operator": "macros",
+                    "value": ["timeFilter"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["datetime"]
+                  },
+                  "type": "rule"
+                }
+              ],
+              "id": "b89ba98a-0123-4456-b89a-b1985a24e5c1",
+              "type": "group"
+            },
+            "whereString": "(entity = 'tokio_runtime' AND attr = 'max_steal_count' AND $__timeFilter(\"time\"))"
+          },
+          "table": "raw"
+        },
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "PA9F31A8E1DD881EA"
+          },
+          "editorMode": "builder",
+          "format": "table",
+          "hide": false,
+          "rawSql": "SELECT \"time\", value AS \"min_steal_count\" FROM raw WHERE (entity = 'tokio_runtime' AND attr = 'min_steal_count' AND $__timeFilter(\"time\")) ORDER BY \"time\" ",
+          "refId": "min_steal_count",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [
+                  {
+                    "name": "\"time\"",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"min_steal_count\"",
+                "parameters": [
+                  {
+                    "name": "value",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "orderBy": {
+              "property": {
+                "name": "\"time\"",
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "whereJsonTree": {
+              "children1": [
+                {
+                  "id": "8b8a8abb-cdef-4012-b456-71985a269f66",
+                  "properties": {
+                    "field": "entity",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["tokio_runtime"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "89a99aba-89ab-4cde-b012-31985a26f0a6",
+                  "properties": {
+                    "field": "attr",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["min_steal_count"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "b888aa8a-4567-489a-bcde-f1985a317ade",
+                  "properties": {
+                    "field": "\"time\"",
+                    "fieldSrc": "field",
+                    "operator": "macros",
+                    "value": ["timeFilter"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["datetime"]
+                  },
+                  "type": "rule"
+                }
+              ],
+              "id": "b89ba98a-0123-4456-b89a-b1985a24e5c1",
+              "type": "group"
+            },
+            "whereString": "(entity = 'tokio_runtime' AND attr = 'min_steal_count' AND $__timeFilter(\"time\"))"
+          },
+          "table": "raw"
+        }
+      ],
+      "title": "steal_count",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "PA9F31A8E1DD881EA"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "ms"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 8,
+        "x": 0,
+        "y": 22
+      },
+      "id": 15,
+      "options": {
+        "legend": {
+          "calcs": ["lastNotNull", "min", "max"],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.0.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "PA9F31A8E1DD881EA"
+          },
+          "editorMode": "builder",
+          "format": "table",
+          "rawSql": "SELECT \"time\", value AS \"mean_poll_duration\" FROM raw WHERE (entity = 'tokio_runtime' AND attr = 'mean_poll_duration' AND $__timeFilter(\"time\")) ORDER BY \"time\" ",
+          "refId": "mean_poll_duration",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [
+                  {
+                    "name": "\"time\"",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"mean_poll_duration\"",
+                "parameters": [
+                  {
+                    "name": "value",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "orderBy": {
+              "property": {
+                "name": "\"time\"",
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "whereJsonTree": {
+              "children1": [
+                {
+                  "id": "8b8a8abb-cdef-4012-b456-71985a269f66",
+                  "properties": {
+                    "field": "entity",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["tokio_runtime"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "89a99aba-89ab-4cde-b012-31985a26f0a6",
+                  "properties": {
+                    "field": "attr",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["mean_poll_duration"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "b888aa8a-4567-489a-bcde-f1985a317ade",
+                  "properties": {
+                    "field": "\"time\"",
+                    "fieldSrc": "field",
+                    "operator": "macros",
+                    "value": ["timeFilter"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["datetime"]
+                  },
+                  "type": "rule"
+                }
+              ],
+              "id": "b89ba98a-0123-4456-b89a-b1985a24e5c1",
+              "type": "group"
+            },
+            "whereString": "(entity = 'tokio_runtime' AND attr = 'mean_poll_duration' AND $__timeFilter(\"time\"))"
+          },
+          "table": "raw"
+        },
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "PA9F31A8E1DD881EA"
+          },
+          "editorMode": "builder",
+          "format": "table",
+          "hide": false,
+          "rawSql": "SELECT \"time\", value AS \"mean_poll_duration_worker_min\" FROM raw WHERE (entity = 'tokio_runtime' AND attr = 'mean_poll_duration_worker_min' AND $__timeFilter(\"time\")) ORDER BY \"time\" ",
+          "refId": "mean_poll_duration_worker_min",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [
+                  {
+                    "name": "\"time\"",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"mean_poll_duration_worker_min\"",
+                "parameters": [
+                  {
+                    "name": "value",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "orderBy": {
+              "property": {
+                "name": "\"time\"",
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "whereJsonTree": {
+              "children1": [
+                {
+                  "id": "8b8a8abb-cdef-4012-b456-71985a269f66",
+                  "properties": {
+                    "field": "entity",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["tokio_runtime"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "89a99aba-89ab-4cde-b012-31985a26f0a6",
+                  "properties": {
+                    "field": "attr",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["mean_poll_duration_worker_min"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "b888aa8a-4567-489a-bcde-f1985a317ade",
+                  "properties": {
+                    "field": "\"time\"",
+                    "fieldSrc": "field",
+                    "operator": "macros",
+                    "value": ["timeFilter"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["datetime"]
+                  },
+                  "type": "rule"
+                }
+              ],
+              "id": "b89ba98a-0123-4456-b89a-b1985a24e5c1",
+              "type": "group"
+            },
+            "whereString": "(entity = 'tokio_runtime' AND attr = 'mean_poll_duration_worker_min' AND $__timeFilter(\"time\"))"
+          },
+          "table": "raw"
+        },
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "PA9F31A8E1DD881EA"
+          },
+          "editorMode": "builder",
+          "format": "table",
+          "hide": false,
+          "rawSql": "SELECT \"time\", value AS \"mean_poll_duration_worker_max\" FROM raw WHERE (entity = 'tokio_runtime' AND attr = 'mean_poll_duration_worker_max' AND $__timeFilter(\"time\")) ORDER BY \"time\" ",
+          "refId": "mean_poll_duration_worker_max",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [
+                  {
+                    "name": "\"time\"",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"mean_poll_duration_worker_max\"",
+                "parameters": [
+                  {
+                    "name": "value",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "orderBy": {
+              "property": {
+                "name": "\"time\"",
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "whereJsonTree": {
+              "children1": [
+                {
+                  "id": "8b8a8abb-cdef-4012-b456-71985a269f66",
+                  "properties": {
+                    "field": "entity",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["tokio_runtime"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "89a99aba-89ab-4cde-b012-31985a26f0a6",
+                  "properties": {
+                    "field": "attr",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["mean_poll_duration_worker_max"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "b888aa8a-4567-489a-bcde-f1985a317ade",
+                  "properties": {
+                    "field": "\"time\"",
+                    "fieldSrc": "field",
+                    "operator": "macros",
+                    "value": ["timeFilter"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["datetime"]
+                  },
+                  "type": "rule"
+                }
+              ],
+              "id": "b89ba98a-0123-4456-b89a-b1985a24e5c1",
+              "type": "group"
+            },
+            "whereString": "(entity = 'tokio_runtime' AND attr = 'mean_poll_duration_worker_max' AND $__timeFilter(\"time\"))"
+          },
+          "table": "raw"
+        }
+      ],
+      "title": "poll_duration",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "PA9F31A8E1DD881EA"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 8,
+        "x": 8,
+        "y": 22
+      },
+      "id": 14,
+      "options": {
+        "legend": {
+          "calcs": ["lastNotNull", "min", "max"],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.0.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "PA9F31A8E1DD881EA"
+          },
+          "editorMode": "builder",
+          "format": "table",
+          "rawSql": "SELECT \"time\", value AS \"global_queue_depth\" FROM raw WHERE (entity = 'tokio_runtime' AND attr = 'global_queue_depth' AND $__timeFilter(\"time\")) ORDER BY \"time\" ",
+          "refId": "global_queue_depth",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [
+                  {
+                    "name": "\"time\"",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"global_queue_depth\"",
+                "parameters": [
+                  {
+                    "name": "value",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "orderBy": {
+              "property": {
+                "name": "\"time\"",
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "whereJsonTree": {
+              "children1": [
+                {
+                  "id": "8b8a8abb-cdef-4012-b456-71985a269f66",
+                  "properties": {
+                    "field": "entity",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["tokio_runtime"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "89a99aba-89ab-4cde-b012-31985a26f0a6",
+                  "properties": {
+                    "field": "attr",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["global_queue_depth"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "b888aa8a-4567-489a-bcde-f1985a317ade",
+                  "properties": {
+                    "field": "\"time\"",
+                    "fieldSrc": "field",
+                    "operator": "macros",
+                    "value": ["timeFilter"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["datetime"]
+                  },
+                  "type": "rule"
+                }
+              ],
+              "id": "b89ba98a-0123-4456-b89a-b1985a24e5c1",
+              "type": "group"
+            },
+            "whereString": "(entity = 'tokio_runtime' AND attr = 'global_queue_depth' AND $__timeFilter(\"time\"))"
+          },
+          "table": "raw"
+        },
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "PA9F31A8E1DD881EA"
+          },
+          "editorMode": "builder",
+          "format": "table",
+          "hide": false,
+          "rawSql": "SELECT \"time\", value AS \"total_local_queue_depth\" FROM raw WHERE (entity = 'tokio_runtime' AND attr = 'total_local_queue_depth' AND $__timeFilter(\"time\")) ORDER BY \"time\" ",
+          "refId": "total_local_queue_depth",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [
+                  {
+                    "name": "\"time\"",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"total_local_queue_depth\"",
+                "parameters": [
+                  {
+                    "name": "value",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "orderBy": {
+              "property": {
+                "name": "\"time\"",
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "whereJsonTree": {
+              "children1": [
+                {
+                  "id": "8b8a8abb-cdef-4012-b456-71985a269f66",
+                  "properties": {
+                    "field": "entity",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["tokio_runtime"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "89a99aba-89ab-4cde-b012-31985a26f0a6",
+                  "properties": {
+                    "field": "attr",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["total_local_queue_depth"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "b888aa8a-4567-489a-bcde-f1985a317ade",
+                  "properties": {
+                    "field": "\"time\"",
+                    "fieldSrc": "field",
+                    "operator": "macros",
+                    "value": ["timeFilter"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["datetime"]
+                  },
+                  "type": "rule"
+                }
+              ],
+              "id": "b89ba98a-0123-4456-b89a-b1985a24e5c1",
+              "type": "group"
+            },
+            "whereString": "(entity = 'tokio_runtime' AND attr = 'total_local_queue_depth' AND $__timeFilter(\"time\"))"
+          },
+          "table": "raw"
+        },
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "PA9F31A8E1DD881EA"
+          },
+          "editorMode": "builder",
+          "format": "table",
+          "hide": false,
+          "rawSql": "SELECT \"time\", value AS \"max_local_queue_depth\" FROM raw WHERE (entity = 'tokio_runtime' AND attr = 'max_local_queue_depth' AND $__timeFilter(\"time\")) ORDER BY \"time\" ",
+          "refId": "max_local_queue_depth",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [
+                  {
+                    "name": "\"time\"",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"max_local_queue_depth\"",
+                "parameters": [
+                  {
+                    "name": "value",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "orderBy": {
+              "property": {
+                "name": "\"time\"",
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "whereJsonTree": {
+              "children1": [
+                {
+                  "id": "8b8a8abb-cdef-4012-b456-71985a269f66",
+                  "properties": {
+                    "field": "entity",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["tokio_runtime"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "89a99aba-89ab-4cde-b012-31985a26f0a6",
+                  "properties": {
+                    "field": "attr",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["max_local_queue_depth"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "b888aa8a-4567-489a-bcde-f1985a317ade",
+                  "properties": {
+                    "field": "\"time\"",
+                    "fieldSrc": "field",
+                    "operator": "macros",
+                    "value": ["timeFilter"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["datetime"]
+                  },
+                  "type": "rule"
+                }
+              ],
+              "id": "b89ba98a-0123-4456-b89a-b1985a24e5c1",
+              "type": "group"
+            },
+            "whereString": "(entity = 'tokio_runtime' AND attr = 'max_local_queue_depth' AND $__timeFilter(\"time\"))"
+          },
+          "table": "raw"
+        },
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "PA9F31A8E1DD881EA"
+          },
+          "editorMode": "builder",
+          "format": "table",
+          "hide": false,
+          "rawSql": "SELECT \"time\", value AS \"min_local_queue_depth\" FROM raw WHERE (entity = 'tokio_runtime' AND attr = 'min_local_queue_depth' AND $__timeFilter(\"time\")) ORDER BY \"time\" ",
+          "refId": "min_local_queue_depth",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [
+                  {
+                    "name": "\"time\"",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"min_local_queue_depth\"",
+                "parameters": [
+                  {
+                    "name": "value",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "orderBy": {
+              "property": {
+                "name": "\"time\"",
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "whereJsonTree": {
+              "children1": [
+                {
+                  "id": "8b8a8abb-cdef-4012-b456-71985a269f66",
+                  "properties": {
+                    "field": "entity",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["tokio_runtime"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "89a99aba-89ab-4cde-b012-31985a26f0a6",
+                  "properties": {
+                    "field": "attr",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["min_local_queue_depth"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "b888aa8a-4567-489a-bcde-f1985a317ade",
+                  "properties": {
+                    "field": "\"time\"",
+                    "fieldSrc": "field",
+                    "operator": "macros",
+                    "value": ["timeFilter"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["datetime"]
+                  },
+                  "type": "rule"
+                }
+              ],
+              "id": "b89ba98a-0123-4456-b89a-b1985a24e5c1",
+              "type": "group"
+            },
+            "whereString": "(entity = 'tokio_runtime' AND attr = 'min_local_queue_depth' AND $__timeFilter(\"time\"))"
+          },
+          "table": "raw"
+        }
+      ],
+      "title": "queue_depth",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "PA9F31A8E1DD881EA"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 8,
+        "x": 16,
+        "y": 22
+      },
+      "id": 21,
+      "options": {
+        "legend": {
+          "calcs": ["lastNotNull", "min", "max"],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.0.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "PA9F31A8E1DD881EA"
+          },
+          "editorMode": "builder",
+          "format": "table",
+          "rawSql": "SELECT \"time\", value AS \"total_polls_count\" FROM raw WHERE (entity = 'tokio_runtime' AND attr = 'total_polls_count' AND $__timeFilter(\"time\")) ORDER BY \"time\" ",
+          "refId": "total_polls_count",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [
+                  {
+                    "name": "\"time\"",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"total_polls_count\"",
+                "parameters": [
+                  {
+                    "name": "value",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "orderBy": {
+              "property": {
+                "name": "\"time\"",
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "whereJsonTree": {
+              "children1": [
+                {
+                  "id": "8b8a8abb-cdef-4012-b456-71985a269f66",
+                  "properties": {
+                    "field": "entity",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["tokio_runtime"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "89a99aba-89ab-4cde-b012-31985a26f0a6",
+                  "properties": {
+                    "field": "attr",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["total_polls_count"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "b888aa8a-4567-489a-bcde-f1985a317ade",
+                  "properties": {
+                    "field": "\"time\"",
+                    "fieldSrc": "field",
+                    "operator": "macros",
+                    "value": ["timeFilter"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["datetime"]
+                  },
+                  "type": "rule"
+                }
+              ],
+              "id": "b89ba98a-0123-4456-b89a-b1985a24e5c1",
+              "type": "group"
+            },
+            "whereString": "(entity = 'tokio_runtime' AND attr = 'total_polls_count' AND $__timeFilter(\"time\"))"
+          },
+          "table": "raw"
+        },
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "PA9F31A8E1DD881EA"
+          },
+          "editorMode": "builder",
+          "format": "table",
+          "hide": false,
+          "rawSql": "SELECT \"time\", value AS \"max_polls_count\" FROM raw WHERE (entity = 'tokio_runtime' AND attr = 'max_polls_count' AND $__timeFilter(\"time\")) ORDER BY \"time\" ",
+          "refId": "max_polls_count",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [
+                  {
+                    "name": "\"time\"",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"max_polls_count\"",
+                "parameters": [
+                  {
+                    "name": "value",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "orderBy": {
+              "property": {
+                "name": "\"time\"",
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "whereJsonTree": {
+              "children1": [
+                {
+                  "id": "8b8a8abb-cdef-4012-b456-71985a269f66",
+                  "properties": {
+                    "field": "entity",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["tokio_runtime"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "89a99aba-89ab-4cde-b012-31985a26f0a6",
+                  "properties": {
+                    "field": "attr",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["max_polls_count"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "b888aa8a-4567-489a-bcde-f1985a317ade",
+                  "properties": {
+                    "field": "\"time\"",
+                    "fieldSrc": "field",
+                    "operator": "macros",
+                    "value": ["timeFilter"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["datetime"]
+                  },
+                  "type": "rule"
+                }
+              ],
+              "id": "b89ba98a-0123-4456-b89a-b1985a24e5c1",
+              "type": "group"
+            },
+            "whereString": "(entity = 'tokio_runtime' AND attr = 'max_polls_count' AND $__timeFilter(\"time\"))"
+          },
+          "table": "raw"
+        },
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "PA9F31A8E1DD881EA"
+          },
+          "editorMode": "builder",
+          "format": "table",
+          "hide": false,
+          "rawSql": "SELECT \"time\", value AS \"min_polls_count\" FROM raw WHERE (entity = 'tokio_runtime' AND attr = 'min_polls_count' AND $__timeFilter(\"time\")) ORDER BY \"time\" ",
+          "refId": "min_polls_count",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [
+                  {
+                    "name": "\"time\"",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"min_polls_count\"",
+                "parameters": [
+                  {
+                    "name": "value",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "orderBy": {
+              "property": {
+                "name": "\"time\"",
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "whereJsonTree": {
+              "children1": [
+                {
+                  "id": "8b8a8abb-cdef-4012-b456-71985a269f66",
+                  "properties": {
+                    "field": "entity",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["tokio_runtime"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "89a99aba-89ab-4cde-b012-31985a26f0a6",
+                  "properties": {
+                    "field": "attr",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["min_polls_count"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "b888aa8a-4567-489a-bcde-f1985a317ade",
+                  "properties": {
+                    "field": "\"time\"",
+                    "fieldSrc": "field",
+                    "operator": "macros",
+                    "value": ["timeFilter"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["datetime"]
+                  },
+                  "type": "rule"
+                }
+              ],
+              "id": "b89ba98a-0123-4456-b89a-b1985a24e5c1",
+              "type": "group"
+            },
+            "whereString": "(entity = 'tokio_runtime' AND attr = 'min_polls_count' AND $__timeFilter(\"time\"))"
+          },
+          "table": "raw"
+        }
+      ],
+      "title": "polls_count",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "PA9F31A8E1DD881EA"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 8,
+        "x": 0,
+        "y": 31
+      },
+      "id": 19,
+      "options": {
+        "legend": {
+          "calcs": ["lastNotNull", "min", "max"],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.0.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "PA9F31A8E1DD881EA"
+          },
+          "editorMode": "builder",
+          "format": "table",
+          "rawSql": "SELECT \"time\", value AS \"num_remote_schedules\" FROM raw WHERE (entity = 'tokio_runtime' AND attr = 'num_remote_schedules' AND $__timeFilter(\"time\")) ORDER BY \"time\" ",
+          "refId": "num_remote_schedules",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [
+                  {
+                    "name": "\"time\"",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"num_remote_schedules\"",
+                "parameters": [
+                  {
+                    "name": "value",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "orderBy": {
+              "property": {
+                "name": "\"time\"",
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "whereJsonTree": {
+              "children1": [
+                {
+                  "id": "8b8a8abb-cdef-4012-b456-71985a269f66",
+                  "properties": {
+                    "field": "entity",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["tokio_runtime"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "89a99aba-89ab-4cde-b012-31985a26f0a6",
+                  "properties": {
+                    "field": "attr",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["num_remote_schedules"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "b888aa8a-4567-489a-bcde-f1985a317ade",
+                  "properties": {
+                    "field": "\"time\"",
+                    "fieldSrc": "field",
+                    "operator": "macros",
+                    "value": ["timeFilter"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["datetime"]
+                  },
+                  "type": "rule"
+                }
+              ],
+              "id": "b89ba98a-0123-4456-b89a-b1985a24e5c1",
+              "type": "group"
+            },
+            "whereString": "(entity = 'tokio_runtime' AND attr = 'num_remote_schedules' AND $__timeFilter(\"time\"))"
+          },
+          "table": "raw"
+        },
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "PA9F31A8E1DD881EA"
+          },
+          "editorMode": "builder",
+          "format": "table",
+          "hide": false,
+          "rawSql": "SELECT \"time\", value AS \"total_local_schedule_count\" FROM raw WHERE (entity = 'tokio_runtime' AND attr = 'total_local_schedule_count' AND $__timeFilter(\"time\")) ORDER BY \"time\" ",
+          "refId": "total_local_schedule_count",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [
+                  {
+                    "name": "\"time\"",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"total_local_schedule_count\"",
+                "parameters": [
+                  {
+                    "name": "value",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "orderBy": {
+              "property": {
+                "name": "\"time\"",
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "whereJsonTree": {
+              "children1": [
+                {
+                  "id": "8b8a8abb-cdef-4012-b456-71985a269f66",
+                  "properties": {
+                    "field": "entity",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["tokio_runtime"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "89a99aba-89ab-4cde-b012-31985a26f0a6",
+                  "properties": {
+                    "field": "attr",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["total_local_schedule_count"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "b888aa8a-4567-489a-bcde-f1985a317ade",
+                  "properties": {
+                    "field": "\"time\"",
+                    "fieldSrc": "field",
+                    "operator": "macros",
+                    "value": ["timeFilter"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["datetime"]
+                  },
+                  "type": "rule"
+                }
+              ],
+              "id": "b89ba98a-0123-4456-b89a-b1985a24e5c1",
+              "type": "group"
+            },
+            "whereString": "(entity = 'tokio_runtime' AND attr = 'total_local_schedule_count' AND $__timeFilter(\"time\"))"
+          },
+          "table": "raw"
+        },
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "PA9F31A8E1DD881EA"
+          },
+          "editorMode": "builder",
+          "format": "table",
+          "hide": false,
+          "rawSql": "SELECT \"time\", value AS \"max_local_schedule_count\" FROM raw WHERE (entity = 'tokio_runtime' AND attr = 'max_local_schedule_count' AND $__timeFilter(\"time\")) ORDER BY \"time\" ",
+          "refId": "max_local_schedule_count",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [
+                  {
+                    "name": "\"time\"",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"max_local_schedule_count\"",
+                "parameters": [
+                  {
+                    "name": "value",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "orderBy": {
+              "property": {
+                "name": "\"time\"",
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "whereJsonTree": {
+              "children1": [
+                {
+                  "id": "8b8a8abb-cdef-4012-b456-71985a269f66",
+                  "properties": {
+                    "field": "entity",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["tokio_runtime"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "89a99aba-89ab-4cde-b012-31985a26f0a6",
+                  "properties": {
+                    "field": "attr",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["max_local_schedule_count"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "b888aa8a-4567-489a-bcde-f1985a317ade",
+                  "properties": {
+                    "field": "\"time\"",
+                    "fieldSrc": "field",
+                    "operator": "macros",
+                    "value": ["timeFilter"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["datetime"]
+                  },
+                  "type": "rule"
+                }
+              ],
+              "id": "b89ba98a-0123-4456-b89a-b1985a24e5c1",
+              "type": "group"
+            },
+            "whereString": "(entity = 'tokio_runtime' AND attr = 'max_local_schedule_count' AND $__timeFilter(\"time\"))"
+          },
+          "table": "raw"
+        },
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "PA9F31A8E1DD881EA"
+          },
+          "editorMode": "builder",
+          "format": "table",
+          "hide": false,
+          "rawSql": "SELECT \"time\", value AS \"min_local_schedule_count\" FROM raw WHERE (entity = 'tokio_runtime' AND attr = 'min_local_schedule_count' AND $__timeFilter(\"time\")) ORDER BY \"time\" ",
+          "refId": "min_local_schedule_count",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [
+                  {
+                    "name": "\"time\"",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"min_local_schedule_count\"",
+                "parameters": [
+                  {
+                    "name": "value",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "orderBy": {
+              "property": {
+                "name": "\"time\"",
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "whereJsonTree": {
+              "children1": [
+                {
+                  "id": "8b8a8abb-cdef-4012-b456-71985a269f66",
+                  "properties": {
+                    "field": "entity",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["tokio_runtime"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "89a99aba-89ab-4cde-b012-31985a26f0a6",
+                  "properties": {
+                    "field": "attr",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["min_local_schedule_count"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "b888aa8a-4567-489a-bcde-f1985a317ade",
+                  "properties": {
+                    "field": "\"time\"",
+                    "fieldSrc": "field",
+                    "operator": "macros",
+                    "value": ["timeFilter"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["datetime"]
+                  },
+                  "type": "rule"
+                }
+              ],
+              "id": "b89ba98a-0123-4456-b89a-b1985a24e5c1",
+              "type": "group"
+            },
+            "whereString": "(entity = 'tokio_runtime' AND attr = 'min_local_schedule_count' AND $__timeFilter(\"time\"))"
+          },
+          "table": "raw"
+        }
+      ],
+      "title": "schedule_count",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "PA9F31A8E1DD881EA"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 8,
+        "x": 8,
+        "y": 31
+      },
+      "id": 16,
+      "options": {
+        "legend": {
+          "calcs": ["lastNotNull", "min", "max"],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.0.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "PA9F31A8E1DD881EA"
+          },
+          "editorMode": "builder",
+          "format": "table",
+          "rawSql": "SELECT \"time\", value AS \"total_noop_count\" FROM raw WHERE (entity = 'tokio_runtime' AND attr = 'total_noop_count' AND $__timeFilter(\"time\")) ORDER BY \"time\" ",
+          "refId": "total_noop_count",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [
+                  {
+                    "name": "\"time\"",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"total_noop_count\"",
+                "parameters": [
+                  {
+                    "name": "value",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "orderBy": {
+              "property": {
+                "name": "\"time\"",
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "whereJsonTree": {
+              "children1": [
+                {
+                  "id": "8b8a8abb-cdef-4012-b456-71985a269f66",
+                  "properties": {
+                    "field": "entity",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["tokio_runtime"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "89a99aba-89ab-4cde-b012-31985a26f0a6",
+                  "properties": {
+                    "field": "attr",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["total_noop_count"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "b888aa8a-4567-489a-bcde-f1985a317ade",
+                  "properties": {
+                    "field": "\"time\"",
+                    "fieldSrc": "field",
+                    "operator": "macros",
+                    "value": ["timeFilter"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["datetime"]
+                  },
+                  "type": "rule"
+                }
+              ],
+              "id": "b89ba98a-0123-4456-b89a-b1985a24e5c1",
+              "type": "group"
+            },
+            "whereString": "(entity = 'tokio_runtime' AND attr = 'total_noop_count' AND $__timeFilter(\"time\"))"
+          },
+          "table": "raw"
+        },
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "PA9F31A8E1DD881EA"
+          },
+          "editorMode": "builder",
+          "format": "table",
+          "hide": false,
+          "rawSql": "SELECT \"time\", value AS \"max_noop_count\" FROM raw WHERE (entity = 'tokio_runtime' AND attr = 'max_noop_count' AND $__timeFilter(\"time\")) ORDER BY \"time\" ",
+          "refId": "max_noop_count",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [
+                  {
+                    "name": "\"time\"",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"max_noop_count\"",
+                "parameters": [
+                  {
+                    "name": "value",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "orderBy": {
+              "property": {
+                "name": "\"time\"",
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "whereJsonTree": {
+              "children1": [
+                {
+                  "id": "8b8a8abb-cdef-4012-b456-71985a269f66",
+                  "properties": {
+                    "field": "entity",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["tokio_runtime"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "89a99aba-89ab-4cde-b012-31985a26f0a6",
+                  "properties": {
+                    "field": "attr",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["max_noop_count"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "b888aa8a-4567-489a-bcde-f1985a317ade",
+                  "properties": {
+                    "field": "\"time\"",
+                    "fieldSrc": "field",
+                    "operator": "macros",
+                    "value": ["timeFilter"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["datetime"]
+                  },
+                  "type": "rule"
+                }
+              ],
+              "id": "b89ba98a-0123-4456-b89a-b1985a24e5c1",
+              "type": "group"
+            },
+            "whereString": "(entity = 'tokio_runtime' AND attr = 'max_noop_count' AND $__timeFilter(\"time\"))"
+          },
+          "table": "raw"
+        },
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "PA9F31A8E1DD881EA"
+          },
+          "editorMode": "builder",
+          "format": "table",
+          "hide": false,
+          "rawSql": "SELECT \"time\", value AS \"min_noop_count\" FROM raw WHERE (entity = 'tokio_runtime' AND attr = 'min_noop_count' AND $__timeFilter(\"time\")) ORDER BY \"time\" ",
+          "refId": "min_noop_count",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [
+                  {
+                    "name": "\"time\"",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"min_noop_count\"",
+                "parameters": [
+                  {
+                    "name": "value",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "orderBy": {
+              "property": {
+                "name": "\"time\"",
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "whereJsonTree": {
+              "children1": [
+                {
+                  "id": "8b8a8abb-cdef-4012-b456-71985a269f66",
+                  "properties": {
+                    "field": "entity",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["tokio_runtime"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "89a99aba-89ab-4cde-b012-31985a26f0a6",
+                  "properties": {
+                    "field": "attr",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["min_noop_count"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "b888aa8a-4567-489a-bcde-f1985a317ade",
+                  "properties": {
+                    "field": "\"time\"",
+                    "fieldSrc": "field",
+                    "operator": "macros",
+                    "value": ["timeFilter"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["datetime"]
+                  },
+                  "type": "rule"
+                }
+              ],
+              "id": "b89ba98a-0123-4456-b89a-b1985a24e5c1",
+              "type": "group"
+            },
+            "whereString": "(entity = 'tokio_runtime' AND attr = 'min_noop_count' AND $__timeFilter(\"time\"))"
+          },
+          "table": "raw"
+        }
+      ],
+      "title": "noop_count",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "PA9F31A8E1DD881EA"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 8,
+        "x": 0,
+        "y": 40
+      },
+      "id": 18,
+      "options": {
+        "legend": {
+          "calcs": ["lastNotNull", "min", "max"],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.0.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "PA9F31A8E1DD881EA"
+          },
+          "editorMode": "builder",
+          "format": "table",
+          "rawSql": "SELECT \"time\", value AS \"total_steal_operations\" FROM raw WHERE (entity = 'tokio_runtime' AND attr = 'total_steal_operations' AND $__timeFilter(\"time\")) ORDER BY \"time\" ",
+          "refId": "total_steal_operations",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [
+                  {
+                    "name": "\"time\"",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"total_steal_operations\"",
+                "parameters": [
+                  {
+                    "name": "value",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "orderBy": {
+              "property": {
+                "name": "\"time\"",
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "whereJsonTree": {
+              "children1": [
+                {
+                  "id": "8b8a8abb-cdef-4012-b456-71985a269f66",
+                  "properties": {
+                    "field": "entity",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["tokio_runtime"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "89a99aba-89ab-4cde-b012-31985a26f0a6",
+                  "properties": {
+                    "field": "attr",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["total_steal_operations"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "b888aa8a-4567-489a-bcde-f1985a317ade",
+                  "properties": {
+                    "field": "\"time\"",
+                    "fieldSrc": "field",
+                    "operator": "macros",
+                    "value": ["timeFilter"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["datetime"]
+                  },
+                  "type": "rule"
+                }
+              ],
+              "id": "b89ba98a-0123-4456-b89a-b1985a24e5c1",
+              "type": "group"
+            },
+            "whereString": "(entity = 'tokio_runtime' AND attr = 'total_steal_operations' AND $__timeFilter(\"time\"))"
+          },
+          "table": "raw"
+        },
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "PA9F31A8E1DD881EA"
+          },
+          "editorMode": "builder",
+          "format": "table",
+          "hide": false,
+          "rawSql": "SELECT \"time\", value AS \"max_steal_operations\" FROM raw WHERE (entity = 'tokio_runtime' AND attr = 'max_steal_operations' AND $__timeFilter(\"time\")) ORDER BY \"time\" ",
+          "refId": "max_steal_operations",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [
+                  {
+                    "name": "\"time\"",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"max_steal_operations\"",
+                "parameters": [
+                  {
+                    "name": "value",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "orderBy": {
+              "property": {
+                "name": "\"time\"",
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "whereJsonTree": {
+              "children1": [
+                {
+                  "id": "8b8a8abb-cdef-4012-b456-71985a269f66",
+                  "properties": {
+                    "field": "entity",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["tokio_runtime"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "89a99aba-89ab-4cde-b012-31985a26f0a6",
+                  "properties": {
+                    "field": "attr",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["max_steal_operations"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "b888aa8a-4567-489a-bcde-f1985a317ade",
+                  "properties": {
+                    "field": "\"time\"",
+                    "fieldSrc": "field",
+                    "operator": "macros",
+                    "value": ["timeFilter"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["datetime"]
+                  },
+                  "type": "rule"
+                }
+              ],
+              "id": "b89ba98a-0123-4456-b89a-b1985a24e5c1",
+              "type": "group"
+            },
+            "whereString": "(entity = 'tokio_runtime' AND attr = 'max_steal_operations' AND $__timeFilter(\"time\"))"
+          },
+          "table": "raw"
+        },
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "PA9F31A8E1DD881EA"
+          },
+          "editorMode": "builder",
+          "format": "table",
+          "hide": false,
+          "rawSql": "SELECT \"time\", value AS \"min_steal_operations\" FROM raw WHERE (entity = 'tokio_runtime' AND attr = 'min_steal_operations' AND $__timeFilter(\"time\")) ORDER BY \"time\" ",
+          "refId": "min_steal_operations",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [
+                  {
+                    "name": "\"time\"",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"min_steal_operations\"",
+                "parameters": [
+                  {
+                    "name": "value",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "orderBy": {
+              "property": {
+                "name": "\"time\"",
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "whereJsonTree": {
+              "children1": [
+                {
+                  "id": "8b8a8abb-cdef-4012-b456-71985a269f66",
+                  "properties": {
+                    "field": "entity",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["tokio_runtime"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "89a99aba-89ab-4cde-b012-31985a26f0a6",
+                  "properties": {
+                    "field": "attr",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["min_steal_operations"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "b888aa8a-4567-489a-bcde-f1985a317ade",
+                  "properties": {
+                    "field": "\"time\"",
+                    "fieldSrc": "field",
+                    "operator": "macros",
+                    "value": ["timeFilter"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["datetime"]
+                  },
+                  "type": "rule"
+                }
+              ],
+              "id": "b89ba98a-0123-4456-b89a-b1985a24e5c1",
+              "type": "group"
+            },
+            "whereString": "(entity = 'tokio_runtime' AND attr = 'min_steal_operations' AND $__timeFilter(\"time\"))"
+          },
+          "table": "raw"
+        }
+      ],
+      "title": "steal_operations",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "PA9F31A8E1DD881EA"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 8,
+        "x": 8,
+        "y": 40
+      },
+      "id": 20,
+      "options": {
+        "legend": {
+          "calcs": ["lastNotNull", "min", "max"],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.0.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "PA9F31A8E1DD881EA"
+          },
+          "editorMode": "builder",
+          "format": "table",
+          "rawSql": "SELECT \"time\", value AS \"total_overflow_count\" FROM raw WHERE (entity = 'tokio_runtime' AND attr = 'total_overflow_count' AND $__timeFilter(\"time\")) ORDER BY \"time\" ",
+          "refId": "total_overflow_count",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [
+                  {
+                    "name": "\"time\"",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"total_overflow_count\"",
+                "parameters": [
+                  {
+                    "name": "value",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "orderBy": {
+              "property": {
+                "name": "\"time\"",
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "whereJsonTree": {
+              "children1": [
+                {
+                  "id": "8b8a8abb-cdef-4012-b456-71985a269f66",
+                  "properties": {
+                    "field": "entity",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["tokio_runtime"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "89a99aba-89ab-4cde-b012-31985a26f0a6",
+                  "properties": {
+                    "field": "attr",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["total_overflow_count"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "b888aa8a-4567-489a-bcde-f1985a317ade",
+                  "properties": {
+                    "field": "\"time\"",
+                    "fieldSrc": "field",
+                    "operator": "macros",
+                    "value": ["timeFilter"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["datetime"]
+                  },
+                  "type": "rule"
+                }
+              ],
+              "id": "b89ba98a-0123-4456-b89a-b1985a24e5c1",
+              "type": "group"
+            },
+            "whereString": "(entity = 'tokio_runtime' AND attr = 'total_overflow_count' AND $__timeFilter(\"time\"))"
+          },
+          "table": "raw"
+        },
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "PA9F31A8E1DD881EA"
+          },
+          "editorMode": "builder",
+          "format": "table",
+          "hide": false,
+          "rawSql": "SELECT \"time\", value AS \"max_overflow_count\" FROM raw WHERE (entity = 'tokio_runtime' AND attr = 'max_overflow_count' AND $__timeFilter(\"time\")) ORDER BY \"time\" ",
+          "refId": "max_overflow_count",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [
+                  {
+                    "name": "\"time\"",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"max_overflow_count\"",
+                "parameters": [
+                  {
+                    "name": "value",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "orderBy": {
+              "property": {
+                "name": "\"time\"",
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "whereJsonTree": {
+              "children1": [
+                {
+                  "id": "8b8a8abb-cdef-4012-b456-71985a269f66",
+                  "properties": {
+                    "field": "entity",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["tokio_runtime"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "89a99aba-89ab-4cde-b012-31985a26f0a6",
+                  "properties": {
+                    "field": "attr",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["max_overflow_count"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "b888aa8a-4567-489a-bcde-f1985a317ade",
+                  "properties": {
+                    "field": "\"time\"",
+                    "fieldSrc": "field",
+                    "operator": "macros",
+                    "value": ["timeFilter"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["datetime"]
+                  },
+                  "type": "rule"
+                }
+              ],
+              "id": "b89ba98a-0123-4456-b89a-b1985a24e5c1",
+              "type": "group"
+            },
+            "whereString": "(entity = 'tokio_runtime' AND attr = 'max_overflow_count' AND $__timeFilter(\"time\"))"
+          },
+          "table": "raw"
+        },
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "PA9F31A8E1DD881EA"
+          },
+          "editorMode": "builder",
+          "format": "table",
+          "hide": false,
+          "rawSql": "SELECT \"time\", value AS \"min_overflow_count\" FROM raw WHERE (entity = 'tokio_runtime' AND attr = 'min_overflow_count' AND $__timeFilter(\"time\")) ORDER BY \"time\" ",
+          "refId": "min_overflow_count",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [
+                  {
+                    "name": "\"time\"",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"min_overflow_count\"",
+                "parameters": [
+                  {
+                    "name": "value",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "orderBy": {
+              "property": {
+                "name": "\"time\"",
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "whereJsonTree": {
+              "children1": [
+                {
+                  "id": "8b8a8abb-cdef-4012-b456-71985a269f66",
+                  "properties": {
+                    "field": "entity",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["tokio_runtime"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "89a99aba-89ab-4cde-b012-31985a26f0a6",
+                  "properties": {
+                    "field": "attr",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["min_overflow_count"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "b888aa8a-4567-489a-bcde-f1985a317ade",
+                  "properties": {
+                    "field": "\"time\"",
+                    "fieldSrc": "field",
+                    "operator": "macros",
+                    "value": ["timeFilter"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["datetime"]
+                  },
+                  "type": "rule"
+                }
+              ],
+              "id": "b89ba98a-0123-4456-b89a-b1985a24e5c1",
+              "type": "group"
+            },
+            "whereString": "(entity = 'tokio_runtime' AND attr = 'min_overflow_count' AND $__timeFilter(\"time\"))"
+          },
+          "table": "raw"
+        }
+      ],
+      "title": "overflow_count",
+      "type": "timeseries"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 49
+      },
+      "id": 8,
+      "panels": [],
+      "title": "Counters",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "PA9F31A8E1DD881EA"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 0,
+        "y": 50
+      },
+      "id": 3,
+      "options": {
+        "legend": {
+          "calcs": ["lastNotNull", "min", "max"],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.0.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "PA9F31A8E1DD881EA"
+          },
+          "editorMode": "builder",
+          "format": "table",
+          "rawSql": "SELECT \"time\", value FROM raw WHERE (entity = 'tokio_runtime' AND attr = 'live_tasks_count' AND $__timeFilter(\"time\")) ORDER BY \"time\" ASC ",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [
+                  {
+                    "name": "\"time\"",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "parameters": [
+                  {
+                    "name": "value",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "orderBy": {
+              "property": {
+                "name": "\"time\"",
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "orderByDirection": "ASC",
+            "whereJsonTree": {
+              "children1": [
+                {
+                  "id": "8b8a8abb-cdef-4012-b456-71985a269f66",
+                  "properties": {
+                    "field": "entity",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["tokio_runtime"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "89a99aba-89ab-4cde-b012-31985a26f0a6",
+                  "properties": {
+                    "field": "attr",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["live_tasks_count"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "b888aa8a-4567-489a-bcde-f1985a317ade",
+                  "properties": {
+                    "field": "\"time\"",
+                    "fieldSrc": "field",
+                    "operator": "macros",
+                    "value": ["timeFilter"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["datetime"]
+                  },
+                  "type": "rule"
+                }
+              ],
+              "id": "b89ba98a-0123-4456-b89a-b1985a24e5c1",
+              "type": "group"
+            },
+            "whereString": "(entity = 'tokio_runtime' AND attr = 'live_tasks_count' AND $__timeFilter(\"time\"))"
+          },
+          "table": "raw"
+        }
+      ],
+      "title": "live_tasks_count",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "PA9F31A8E1DD881EA"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 8,
+        "y": 50
+      },
+      "id": 6,
+      "options": {
+        "legend": {
+          "calcs": ["lastNotNull", "min", "max"],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.0.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "PA9F31A8E1DD881EA"
+          },
+          "editorMode": "builder",
+          "format": "table",
+          "rawSql": "SELECT \"time\", value FROM raw WHERE (entity = 'tokio_runtime' AND attr = 'blocking_threads_count' AND $__timeFilter(\"time\")) ORDER BY \"time\" ASC ",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [
+                  {
+                    "name": "\"time\"",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "parameters": [
+                  {
+                    "name": "value",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "orderBy": {
+              "property": {
+                "name": "\"time\"",
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "orderByDirection": "ASC",
+            "whereJsonTree": {
+              "children1": [
+                {
+                  "id": "8b8a8abb-cdef-4012-b456-71985a269f66",
+                  "properties": {
+                    "field": "entity",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["tokio_runtime"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "89a99aba-89ab-4cde-b012-31985a26f0a6",
+                  "properties": {
+                    "field": "attr",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["blocking_threads_count"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "b888aa8a-4567-489a-bcde-f1985a317ade",
+                  "properties": {
+                    "field": "\"time\"",
+                    "fieldSrc": "field",
+                    "operator": "macros",
+                    "value": ["timeFilter"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["datetime"]
+                  },
+                  "type": "rule"
+                }
+              ],
+              "id": "b89ba98a-0123-4456-b89a-b1985a24e5c1",
+              "type": "group"
+            },
+            "whereString": "(entity = 'tokio_runtime' AND attr = 'blocking_threads_count' AND $__timeFilter(\"time\"))"
+          },
+          "table": "raw"
+        }
+      ],
+      "title": "blocking_threads_count",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "PA9F31A8E1DD881EA"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 50
+      },
+      "id": 7,
+      "options": {
+        "legend": {
+          "calcs": ["lastNotNull", "min", "max"],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.0.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "PA9F31A8E1DD881EA"
+          },
+          "editorMode": "builder",
+          "format": "table",
+          "rawSql": "SELECT \"time\", value FROM raw WHERE (entity = 'tokio_runtime' AND attr = 'idle_blocking_threads_count' AND $__timeFilter(\"time\")) ORDER BY \"time\" ASC ",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [
+                  {
+                    "name": "\"time\"",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "parameters": [
+                  {
+                    "name": "value",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "orderBy": {
+              "property": {
+                "name": "\"time\"",
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "orderByDirection": "ASC",
+            "whereJsonTree": {
+              "children1": [
+                {
+                  "id": "8b8a8abb-cdef-4012-b456-71985a269f66",
+                  "properties": {
+                    "field": "entity",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["tokio_runtime"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "89a99aba-89ab-4cde-b012-31985a26f0a6",
+                  "properties": {
+                    "field": "attr",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["idle_blocking_threads_count"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "b888aa8a-4567-489a-bcde-f1985a317ade",
+                  "properties": {
+                    "field": "\"time\"",
+                    "fieldSrc": "field",
+                    "operator": "macros",
+                    "value": ["timeFilter"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["datetime"]
+                  },
+                  "type": "rule"
+                }
+              ],
+              "id": "b89ba98a-0123-4456-b89a-b1985a24e5c1",
+              "type": "group"
+            },
+            "whereString": "(entity = 'tokio_runtime' AND attr = 'idle_blocking_threads_count' AND $__timeFilter(\"time\"))"
+          },
+          "table": "raw"
+        }
+      ],
+      "title": "idle_blocking_threads_count",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "PA9F31A8E1DD881EA"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 0,
+        "y": 58
+      },
+      "id": 10,
+      "options": {
+        "legend": {
+          "calcs": ["lastNotNull", "min", "max"],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.0.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "PA9F31A8E1DD881EA"
+          },
+          "editorMode": "builder",
+          "format": "table",
+          "rawSql": "SELECT \"time\", value FROM raw WHERE (entity = 'tokio_runtime' AND attr = 'budget_forced_yield_count' AND $__timeFilter(\"time\")) ORDER BY \"time\" ASC ",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [
+                  {
+                    "name": "\"time\"",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "parameters": [
+                  {
+                    "name": "value",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "orderBy": {
+              "property": {
+                "name": "\"time\"",
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "orderByDirection": "ASC",
+            "whereJsonTree": {
+              "children1": [
+                {
+                  "id": "8b8a8abb-cdef-4012-b456-71985a269f66",
+                  "properties": {
+                    "field": "entity",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["tokio_runtime"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "89a99aba-89ab-4cde-b012-31985a26f0a6",
+                  "properties": {
+                    "field": "attr",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["budget_forced_yield_count"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "b888aa8a-4567-489a-bcde-f1985a317ade",
+                  "properties": {
+                    "field": "\"time\"",
+                    "fieldSrc": "field",
+                    "operator": "macros",
+                    "value": ["timeFilter"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["datetime"]
+                  },
+                  "type": "rule"
+                }
+              ],
+              "id": "b89ba98a-0123-4456-b89a-b1985a24e5c1",
+              "type": "group"
+            },
+            "whereString": "(entity = 'tokio_runtime' AND attr = 'budget_forced_yield_count' AND $__timeFilter(\"time\"))"
+          },
+          "table": "raw"
+        }
+      ],
+      "title": "budget_forced_yield_count",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "PA9F31A8E1DD881EA"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 8,
+        "y": 58
+      },
+      "id": 4,
+      "options": {
+        "legend": {
+          "calcs": ["lastNotNull", "min", "max"],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.0.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "PA9F31A8E1DD881EA"
+          },
+          "editorMode": "builder",
+          "format": "table",
+          "rawSql": "SELECT \"time\", value FROM raw WHERE (entity = 'tokio_runtime' AND attr = 'io_driver_ready_count' AND $__timeFilter(\"time\")) ORDER BY \"time\" ASC ",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [
+                  {
+                    "name": "\"time\"",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "parameters": [
+                  {
+                    "name": "value",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "orderBy": {
+              "property": {
+                "name": "\"time\"",
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "orderByDirection": "ASC",
+            "whereJsonTree": {
+              "children1": [
+                {
+                  "id": "8b8a8abb-cdef-4012-b456-71985a269f66",
+                  "properties": {
+                    "field": "entity",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["tokio_runtime"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "89a99aba-89ab-4cde-b012-31985a26f0a6",
+                  "properties": {
+                    "field": "attr",
+                    "fieldSrc": "field",
+                    "operator": "equal",
+                    "value": ["io_driver_ready_count"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["text"]
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "b888aa8a-4567-489a-bcde-f1985a317ade",
+                  "properties": {
+                    "field": "\"time\"",
+                    "fieldSrc": "field",
+                    "operator": "macros",
+                    "value": ["timeFilter"],
+                    "valueError": [null],
+                    "valueSrc": ["value"],
+                    "valueType": ["datetime"]
+                  },
+                  "type": "rule"
+                }
+              ],
+              "id": "b89ba98a-0123-4456-b89a-b1985a24e5c1",
+              "type": "group"
+            },
+            "whereString": "(entity = 'tokio_runtime' AND attr = 'io_driver_ready_count' AND $__timeFilter(\"time\"))"
+          },
+          "table": "raw"
+        }
+      ],
+      "title": "io_driver_ready_count",
+      "type": "timeseries"
+    }
+  ],
+  "preload": false,
+  "refresh": "5s",
+  "schemaVersion": 41,
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-5m",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "tokio_metrics",
+  "uid": "b2784726-249c-43b0-b044-b0fc3ff58747",
+  "version": 27
+}

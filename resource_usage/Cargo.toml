@@ -1,0 +1,15 @@
+[package]
+name = "resource_usage"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+rsiot = { path = "../../rsiot", features = [
+    "log_console",
+    "log_tokio",
+    "executor",
+    "cmp_timescaledb",
+] }
+serde = { version = "*", features = ["derive"] }
+tokio = { version = "*", features = ["rt-multi-thread"] }
+tracing = "*"
