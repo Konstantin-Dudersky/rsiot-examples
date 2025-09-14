@@ -1,0 +1,18 @@
+[package]
+name = "slint_svg"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+anyhow = "*"
+slint = { version = "*", default-features = false, features = [
+    "compat-1-2",
+    "backend-linuxkms-noseat",
+    "renderer-skia",
+] }
+rsiot = { path = "../../rsiot", features = ["cmp_slint"] }
+serde = { version = "*", features = ["derive"] }
+tokio = { version = "*", features = ["macros", "rt-multi-thread"] }
+
+[build-dependencies]
+slint-build = "*"
