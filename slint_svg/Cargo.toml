@@ -9,10 +9,14 @@ slint = { version = "*", default-features = false, features = [
     "compat-1-2",
     "backend-linuxkms-noseat",
     "renderer-skia",
+    # "live-preview"
 ] }
-rsiot = { path = "../../rsiot", features = ["cmp_slint"] }
+rsiot = { path = "../../rsiot", features = ["cmp_slint", "cmp_svg"] }
 serde = { version = "*", features = ["derive"] }
 tokio = { version = "*", features = ["macros", "rt-multi-thread"] }
 
 [build-dependencies]
 slint-build = "*"
+
+[package.metadata.cross.target.armv7-unknown-linux-gnueabihf]
+dockerfile = "./Dockerfile.armv7-unknown-linux-gnueabihf"

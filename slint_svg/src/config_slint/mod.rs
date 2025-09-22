@@ -28,9 +28,14 @@ pub fn cmp(slint_window: Weak<MainWindow>) -> Component<Config<Msg, MainWindow>,
         fn_input: |msg, w| {
             let input = w.global::<Input>();
 
-            let im = Image::load_from_svg_data(IMAGE.as_bytes()).unwrap();
-
-            input.set_svg_image(im);
+            match msg {
+                Msg::Counter(_) => (),
+                Msg::ButtonPressed => (),
+                Msg::SvgImage(image) => {
+                    let im = Image::load_from_svg_data(&image).unwrap();
+                    input.set_svg_image(im);
+                }
+            }
         },
         fn_output: |w, sender| {
             let output = w.global::<Output>();

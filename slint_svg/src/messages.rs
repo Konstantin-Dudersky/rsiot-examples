@@ -5,6 +5,7 @@ use serde::{Deserialize, Serialize};
 pub enum Msg {
     Counter(u32),
     ButtonPressed,
+    SvgImage(Vec<u8>),
 }
 
 impl MsgDataBound for Msg {}

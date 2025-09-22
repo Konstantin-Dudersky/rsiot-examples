@@ -1,5 +1,6 @@
 mod config_inject_periodic;
 mod config_slint;
+mod config_svg;
 mod messages;
 
 use rsiot::executor::{ComponentExecutor, ComponentExecutorConfig};
@@ -28,6 +29,7 @@ async fn main_executor(slint_window: Weak<config_slint::MainWindow>) -> anyhow::
     ComponentExecutor::new(executor_config)
         .add_cmp(config_slint::cmp(slint_window))
         .add_cmp(config_inject_periodic::cmp())
+        .add_cmp(config_svg::cmp())
         .wait_result()
         .await?;
     Err(anyhow::Error::msg("Program stop"))
