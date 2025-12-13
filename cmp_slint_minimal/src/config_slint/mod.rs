@@ -3,7 +3,7 @@ use std::time::Duration;
 use rsiot::{components::cmp_slint::*, executor::Component};
 use slint::{ComponentHandle, Weak};
 
-use crate::messages::Msg;
+use crate::messages::*;
 
 slint::include_modules!();
 

@@ -16,3 +16,10 @@ tokio = { version = "*", features = ["macros", "rt-multi-thread"] }
 
 [build-dependencies]
 slint-build = "*"
+
+[package.metadata.cross.target.armv7-unknown-linux-gnueabihf]
+dockerfile = "./Dockerfile.armv7-unknown-linux-gnueabihf"
+
+[profile.release]
+lto = "fat"
+opt-level = "z"
